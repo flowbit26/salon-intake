@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Afspraak geannuleerd — Atelier Lumière</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --color-bg: #1C1815;
+    --color-paper: #F2EDE4;
+    --color-accent: #9CAC9A;
+    --color-accent-dim: #6F7D6D;
+    --color-text-muted: #8A8378;
+    --font-display: 'Fraunces', serif;
+    --font-body: 'Inter', sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { font-family: var(--font-body); background: var(--color-bg); color: var(--color-paper); min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+
+  .container { max-width: 480px; width: 100%; padding: 2rem; text-align: center; }
+
+  .brand { font-family: var(--font-display); font-size: 0.8rem; letter-spacing: 0.2em; color: var(--color-accent); margin-bottom: 2.5rem; text-transform: uppercase; }
+
+  .icon { width: 4rem; height: 4rem; border-radius: 50%; background: rgba(156,172,154,0.15); border: 1px solid rgba(156,172,154,0.3); display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; }
+
+  h1 { font-family: var(--font-display); font-size: 2rem; font-weight: 400; color: var(--color-paper); margin-bottom: 1rem; line-height: 1.2; }
+
+  p { font-size: 0.95rem; line-height: 1.7; color: var(--color-text-muted); margin-bottom: 2.5rem; }
+
+  .btn { display: inline-block; padding: 0.9rem 2rem; background: var(--color-accent); color: var(--color-bg); border-radius: 8px; font-family: var(--font-body); font-size: 0.88rem; font-weight: 600; text-decoration: none; letter-spacing: 0.03em; transition: opacity 0.2s; }
+  .btn:hover { opacity: 0.88; }
+
+  .divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(242,237,228,0.1), transparent); margin: 2.5rem 0; }
+
+  .footer { font-size: 0.75rem; color: var(--color-text-muted); letter-spacing: 0.08em; }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="brand">Atelier Lumière</div>
+
+    <div class="icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M9 12l2 2 4-4" stroke="#9CAC9A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="12" cy="12" r="9" stroke="#9CAC9A" stroke-width="1.5"/>
+      </svg>
+    </div>
+
+    <h1>Uw afspraak is geannuleerd</h1>
+    <p>
+      We hebben uw annulering ontvangen en u ontvangt hiervan een bevestiging per mail.
+      Jammer dat het nu niet past — u bent altijd welkom om een nieuw moment in te plannen.
+    </p>
+
+    <a href="https://salon-intake-official.netlify.app/" class="btn">Nieuwe afspraak maken</a>
+
+    <div class="divider"></div>
+    <div class="footer">Atelier Lumière · Antwerpsestraat 14, Mechelen</div>
+  </div>
+</body>
+</html>
