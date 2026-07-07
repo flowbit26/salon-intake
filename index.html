@@ -3,798 +3,906 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Afspraak boeken</title>
+<title>Afspraak boeken — Atelier Lumière</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --color-bg: #1C1815;
-    --color-bg-soft: #25201C;
-    --color-paper: #F2EDE4;
-    --color-paper-dim: #E5DDCD;
-    --color-accent: #9CAC9A;
-    --color-accent-dim: #6F7D6D;
-    --color-text-dark: #1C1815;
-    --color-text-light: #F2EDE4;
-    --color-text-muted: #8A8378;
-    --color-error: #B85C4C;
-    --font-display: 'Fraunces', serif;
-    --font-body: 'Inter', sans-serif;
-  }
+:root {
+  --bg: #1C1815;
+  --paper: #F2EDE4;
+  --paper-dim: #E5DDCD;
+  --accent: #9CAC9A;
+  --accent-dim: #6F7D6D;
+  --text-dark: #1C1815;
+  --text-light: #F2EDE4;
+  --text-muted: #8A8378;
+  --error: #B85C4C;
+  --display: 'Fraunces', serif;
+  --body: 'Inter', sans-serif;
+}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-  html, body {
-    font-family: var(--font-body);
-    background: var(--color-bg);
-    color: var(--color-text-light);
-    min-height: 100vh;
-  }
+html, body {
+  font-family: var(--body);
+  background: var(--bg);
+  color: var(--text-light);
+  min-height: 100vh;
+}
 
-  body {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
-  }
+/* ===== Layout ===== */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  min-height: 100vh;
+}
 
-  @media (max-width: 860px) {
-    body { grid-template-columns: 1fr; }
-  }
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+}
 
-  .intro-panel {
-    background: var(--color-bg);
-    padding: clamp(2.5rem, 5vw, 5rem);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    position: relative;
-    overflow: hidden;
-  }
+/* ===== Left panel ===== */
+.left {
+  background: var(--bg);
+  padding: clamp(2.5rem, 6vw, 5rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
 
-  .intro-panel::before {
-    content: "";
-    position: absolute;
-    top: -20%;
-    right: -30%;
-    width: 70%;
-    height: 70%;
-    background: radial-gradient(circle, rgba(156,172,154,0.10) 0%, transparent 70%);
-    pointer-events: none;
-  }
+.left::before {
+  content: '';
+  position: absolute;
+  top: -10%; right: -20%;
+  width: 60%; height: 60%;
+  background: radial-gradient(circle, rgba(156,172,154,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
 
-  .brand-mark {
-    font-family: var(--font-display);
-    font-size: 1.05rem;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    color: var(--color-text-light);
-    z-index: 1;
-  }
+.logo {
+  font-family: var(--display);
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: var(--text-light);
+  z-index: 1;
+}
+.logo small {
+  display: block;
+  font-family: var(--body);
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 0.3rem;
+  font-weight: 400;
+}
 
-  .brand-mark span {
-    display: block;
-    font-family: var(--font-body);
-    font-size: 0.7rem;
-    font-weight: 400;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--color-text-muted);
-    margin-top: 0.35rem;
-  }
+.hero { z-index: 1; }
+.hero-tag {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 1.2rem;
+}
+.hero h1 {
+  font-family: var(--display);
+  font-size: clamp(1.9rem, 4vw, 2.8rem);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--text-light);
+  margin-bottom: 1.2rem;
+}
+.hero h1 em { font-style: italic; color: var(--accent); }
+.hero p {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+  max-width: 22rem;
+}
 
-  .intro-content {
-    z-index: 1;
-    max-width: 26rem;
-  }
+.trust { z-index: 1; display: flex; flex-direction: column; gap: 0.85rem; margin-top: 2.5rem; }
+.trust-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  font-size: 0.83rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+.trust-item svg { flex-shrink: 0; margin-top: 0.12rem; }
 
-  .intro-eyebrow {
-    font-size: 0.72rem;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--color-accent);
-    margin-bottom: 1.1rem;
-    font-weight: 500;
-  }
+.left-footer {
+  z-index: 1;
+  font-size: 0.73rem;
+  color: var(--text-muted);
+  padding-top: 1.8rem;
+  border-top: 1px solid rgba(242,237,228,0.08);
+  letter-spacing: 0.04em;
+}
 
-  .intro-title {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 4vw, 2.7rem);
-    font-weight: 500;
-    line-height: 1.15;
-    color: var(--color-text-light);
-    margin-bottom: 1.3rem;
-  }
+/* ===== Right panel ===== */
+.right {
+  background: var(--paper);
+  padding: clamp(2rem, 5vw, 4.5rem);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  overflow-y: auto;
+}
 
-  .intro-title em {
-    font-style: italic;
-    color: var(--color-accent);
-  }
+.form-wrap {
+  width: 100%;
+  max-width: 32rem;
+  padding-top: 1rem;
+}
 
-  .intro-desc {
-    font-size: 0.95rem;
-    line-height: 1.65;
-    color: var(--color-text-muted);
-  }
+/* Progress */
+.progress {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 2.2rem;
+}
+.progress-dot {
+  height: 3px;
+  flex: 1;
+  border-radius: 99px;
+  background: var(--paper-dim);
+  transition: background 0.3s ease;
+}
+.progress-dot.active { background: var(--accent); }
+.progress-dot.done { background: var(--accent-dim); }
 
-  .trust-list {
-    z-index: 1;
-    margin-top: 2.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.9rem;
-  }
+/* Steps */
+.step { display: none; }
+.step.active { display: block; animation: fadeUp 0.35s ease; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-  .trust-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.7rem;
-    font-size: 0.85rem;
-    color: var(--color-text-muted);
-    line-height: 1.5;
-  }
+.step-eyebrow {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: 0.45rem;
+}
+.step-title {
+  font-family: var(--display);
+  font-size: 1.55rem;
+  font-weight: 400;
+  color: var(--text-dark);
+  margin-bottom: 1.6rem;
+}
 
-  .trust-item svg {
-    flex-shrink: 0;
-    margin-top: 0.15rem;
-    color: var(--color-accent);
-  }
+/* Treatment cards */
+.treatment-list { display: grid; gap: 0.65rem; }
+.treatment-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.1rem;
+  border: 1.5px solid var(--paper-dim);
+  border-radius: 10px;
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 0.18s, background 0.18s;
+  user-select: none;
+}
+.treatment-card:hover { border-color: var(--accent); }
+.treatment-card.selected { border-color: var(--accent); background: rgba(156,172,154,0.07); }
+.tc-info { display: flex; flex-direction: column; gap: 0.2rem; }
+.tc-name { font-size: 0.88rem; font-weight: 600; color: var(--text-dark); }
+.tc-meta { font-size: 0.75rem; color: var(--text-muted); }
+.tc-price { font-size: 0.82rem; font-weight: 600; color: var(--accent-dim); white-space: nowrap; margin-left: 1rem; }
 
-  .intro-footer {
-    z-index: 1;
-    font-size: 0.75rem;
-    color: var(--color-text-muted);
-    padding-top: 2rem;
-    border-top: 1px solid rgba(242,237,228,0.1);
-  }
+/* ===== Calendar ===== */
+.calendar-wrap {
+  background: #fff;
+  border: 1.5px solid var(--paper-dim);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 1.4rem;
+}
 
-  .form-panel {
-    background: var(--color-paper);
-    padding: clamp(2rem, 5vw, 4.5rem);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+.cal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.2rem 0.8rem;
+  border-bottom: 1px solid var(--paper-dim);
+}
+.cal-nav {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: background 0.15s, color 0.15s;
+}
+.cal-nav:hover { background: var(--paper-dim); color: var(--text-dark); }
+.cal-month {
+  font-family: var(--display);
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--text-dark);
+}
 
-  .form-wrap {
-    width: 100%;
-    max-width: 30rem;
-  }
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  padding: 0.8rem;
+  gap: 3px;
+}
+.cal-dow {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 0.3rem 0;
+}
+.cal-day {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.82rem;
+  font-weight: 500;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--text-dark);
+  transition: background 0.15s, color 0.15s;
+  border: 1.5px solid transparent;
+}
+.cal-day:hover:not(.disabled):not(.empty) { background: rgba(156,172,154,0.15); }
+.cal-day.selected { background: var(--accent); color: #fff; border-color: var(--accent); }
+.cal-day.today { border-color: var(--accent-dim); }
+.cal-day.disabled { color: var(--paper-dim); cursor: not-allowed; }
+.cal-day.empty { cursor: default; }
 
-  .progress-track {
-    height: 3px;
-    width: 100%;
-    background: var(--color-paper-dim);
-    border-radius: 999px;
-    overflow: hidden;
-    margin-bottom: 2.2rem;
-    position: relative;
-  }
+/* Time slots */
+.slots-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: 0.7rem;
+}
+.slots-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.slot-btn {
+  padding: 0.6rem 0.3rem;
+  text-align: center;
+  border: 1.5px solid var(--paper-dim);
+  border-radius: 8px;
+  background: #fff;
+  font-family: var(--body);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--text-dark);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+.slot-btn:hover:not(:disabled) { border-color: var(--accent); }
+.slot-btn.selected { border-color: var(--accent); background: var(--accent); color: #fff; }
+.slot-btn:disabled { opacity: 0.3; cursor: not-allowed; text-decoration: line-through; }
+.slots-loading {
+  font-size: 0.83rem;
+  color: var(--text-muted);
+  font-style: italic;
+  padding: 0.5rem 0;
+}
+.slots-empty {
+  font-size: 0.83rem;
+  color: var(--text-muted);
+  padding: 0.5rem 0;
+}
 
-  .progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--color-accent-dim), var(--color-accent));
-    border-radius: 999px;
-    transition: width 0.5s cubic-bezier(0.65, 0, 0.35, 1);
-    position: relative;
-  }
+/* Form fields */
+.field { margin-bottom: 1.15rem; }
+.field label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-dark);
+  margin-bottom: 0.4rem;
+}
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 0.78rem 0.9rem;
+  background: #fff;
+  border: 1.5px solid var(--paper-dim);
+  border-radius: 8px;
+  font-family: var(--body);
+  font-size: 0.9rem;
+  color: var(--text-dark);
+  transition: border-color 0.18s, box-shadow 0.18s;
+  appearance: none;
+}
+.field textarea { resize: vertical; min-height: 4.5rem; }
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(156,172,154,0.16);
+}
+.field.invalid input,
+.field.invalid select { border-color: var(--error); }
+.field-hint { font-size: 0.74rem; color: var(--text-muted); margin-top: 0.32rem; }
+.field-err { font-size: 0.74rem; color: var(--error); margin-top: 0.32rem; display: none; }
+.field.invalid .field-err { display: block; }
+.optional { color: var(--text-muted); font-weight: 400; font-size: 0.75rem; }
 
-  .progress-fill::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
-    animation: breathe 2.4s ease-in-out infinite;
-  }
+.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
+@media (max-width: 480px) { .row-2 { grid-template-columns: 1fr; } }
 
-  @keyframes breathe {
-    0%, 100% { opacity: 0.3; transform: translateX(-30%); }
-    50% { opacity: 0.8; transform: translateX(30%); }
-  }
+/* Summary */
+.summary {
+  background: rgba(242,237,228,0.6);
+  border: 1px solid var(--paper-dim);
+  border-radius: 10px;
+  padding: 1.1rem 1.2rem;
+  margin-bottom: 1.4rem;
+}
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.84rem;
+  padding: 0.38rem 0;
+  gap: 1rem;
+}
+.summary-row + .summary-row { border-top: 1px solid var(--paper-dim); }
+.summary-label { color: var(--text-muted); flex-shrink: 0; }
+.summary-value { color: var(--text-dark); font-weight: 500; text-align: right; }
 
-  .step-label {
-    font-size: 0.72rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--color-text-muted);
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-  }
+/* Buttons */
+.btn-row { display: flex; gap: 0.7rem; margin-top: 1.8rem; }
+.btn {
+  font-family: var(--body);
+  font-size: 0.87rem;
+  font-weight: 600;
+  padding: 0.82rem 1.5rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.18s, transform 0.12s;
+}
+.btn:active { transform: scale(0.98); }
+.btn-primary { background: var(--text-dark); color: var(--paper); flex: 1; }
+.btn-primary:hover { opacity: 0.87; }
+.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-ghost {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1.5px solid var(--paper-dim);
+}
+.btn-ghost:hover { border-color: var(--text-muted); }
 
-  .step-title {
-    font-family: var(--font-display);
-    font-size: 1.6rem;
-    font-weight: 500;
-    color: var(--color-text-dark);
-    margin-bottom: 1.8rem;
-  }
+/* Error banner */
+.error-banner {
+  background: rgba(184,92,76,0.09);
+  border: 1px solid rgba(184,92,76,0.3);
+  color: var(--error);
+  font-size: 0.83rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: 8px;
+  margin-top: 0.9rem;
+  display: none;
+}
 
-  .step { display: none; animation: fadeIn 0.4s ease; }
-  .step.active { display: block; }
+/* Success */
+.success-wrap { text-align: center; padding: 2rem 0; }
+.success-icon {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+}
+.success-wrap h2 {
+  font-family: var(--display);
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--text-dark);
+  margin-bottom: 0.6rem;
+}
+.success-wrap p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  max-width: 22rem;
+  margin: 0 auto 1.6rem;
+}
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(6px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+/* Loading overlay */
+.overlay {
+  position: fixed; inset: 0;
+  background: rgba(28,24,21,0.45);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+.overlay.active { display: flex; }
+.spinner {
+  width: 2rem; height: 2rem;
+  border: 2.5px solid rgba(242,237,228,0.2);
+  border-top-color: var(--paper);
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
 
-  .field-group { margin-bottom: 1.3rem; }
-
-  .field-label {
-    display: block;
-    font-size: 0.82rem;
-    font-weight: 500;
-    color: var(--color-text-dark);
-    margin-bottom: 0.45rem;
-  }
-
-  .field-label .optional {
-    color: var(--color-text-muted);
-    font-weight: 400;
-    font-size: 0.78rem;
-  }
-
-  input[type="text"],
-  input[type="email"],
-  input[type="tel"],
-  input[type="date"],
-  select,
-  textarea {
-    width: 100%;
-    padding: 0.8rem 0.95rem;
-    background: #fff;
-    border: 1.5px solid var(--color-paper-dim);
-    border-radius: 8px;
-    font-family: var(--font-body);
-    font-size: 0.92rem;
-    color: var(--color-text-dark);
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  }
-
-  textarea { resize: vertical; min-height: 5rem; }
-
-  input:focus, select:focus, textarea:focus {
-    outline: none;
-    border-color: var(--color-accent);
-    box-shadow: 0 0 0 3px rgba(156,172,154,0.18);
-  }
-
-  .field-hint {
-    font-size: 0.76rem;
-    color: var(--color-text-muted);
-    margin-top: 0.35rem;
-  }
-
-  .field-error {
-    font-size: 0.78rem;
-    color: var(--color-error);
-    margin-top: 0.35rem;
-    display: none;
-  }
-
-  .field-group.invalid input,
-  .field-group.invalid select,
-  .field-group.invalid textarea {
-    border-color: var(--color-error);
-  }
-
-  .field-group.invalid .field-error { display: block; }
-
-  .row-2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-
-  .treatment-grid {
-    display: grid;
-    gap: 0.7rem;
-    margin-bottom: 0.4rem;
-  }
-
-  .treatment-card {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.95rem 1.1rem;
-    border: 1.5px solid var(--color-paper-dim);
-    border-radius: 8px;
-    background: #fff;
-    cursor: pointer;
-    transition: border-color 0.2s ease, background 0.2s ease;
-  }
-
-  .treatment-card:hover { border-color: var(--color-accent); }
-  .treatment-card.selected { border-color: var(--color-accent); background: rgba(156,172,154,0.08); }
-
-  .treatment-name { font-size: 0.9rem; font-weight: 500; color: var(--color-text-dark); }
-  .treatment-meta { font-size: 0.76rem; color: var(--color-text-muted); margin-top: 0.15rem; }
-  .treatment-price { font-size: 0.85rem; font-weight: 600; color: var(--color-accent-dim); white-space: nowrap; }
-
-  .slot-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.6rem;
-    margin-top: 0.8rem;
-  }
-
-  .slot-btn {
-    padding: 0.65rem 0.4rem;
-    text-align: center;
-    border: 1.5px solid var(--color-paper-dim);
-    border-radius: 8px;
-    background: #fff;
-    font-size: 0.84rem;
-    font-weight: 500;
-    color: var(--color-text-dark);
-    cursor: pointer;
-    transition: border-color 0.2s ease, background 0.2s ease;
-  }
-
-  .slot-btn:hover { border-color: var(--color-accent); }
-  .slot-btn.selected { border-color: var(--color-accent); background: var(--color-accent); color: #fff; }
-  .slot-btn:disabled { opacity: 0.35; cursor: not-allowed; text-decoration: line-through; }
-
-  .slot-empty {
-    font-size: 0.85rem;
-    color: var(--color-text-muted);
-    padding: 1rem 0;
-  }
-
-  .btn-row {
-    display: flex;
-    gap: 0.8rem;
-    margin-top: 2rem;
-  }
-
-  .btn {
-    font-family: var(--font-body);
-    font-size: 0.88rem;
-    font-weight: 600;
-    padding: 0.85rem 1.6rem;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    transition: transform 0.15s ease, opacity 0.2s ease;
-  }
-
-  .btn-primary { background: var(--color-text-dark); color: var(--color-paper); flex: 1; }
-  .btn-primary:hover { opacity: 0.88; }
-  .btn-primary:active { transform: scale(0.98); }
-  .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
-
-  .btn-secondary {
-    background: transparent;
-    color: var(--color-text-muted);
-    border: 1.5px solid var(--color-paper-dim);
-  }
-
-  .btn-secondary:hover { border-color: var(--color-text-muted); }
-
-  .success-icon {
-    width: 3.2rem;
-    height: 3.2rem;
-    border-radius: 50%;
-    background: var(--color-accent);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1.4rem;
-  }
-
-  .summary-box {
-    background: #fff;
-    border: 1.5px solid var(--color-paper-dim);
-    border-radius: 10px;
-    padding: 1.2rem 1.3rem;
-    margin: 1.4rem 0 0.4rem;
-  }
-
-  .summary-row {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.86rem;
-    padding: 0.4rem 0;
-  }
-
-  .summary-row:not(:last-child) { border-bottom: 1px solid var(--color-paper-dim); }
-  .summary-label { color: var(--color-text-muted); }
-  .summary-value { color: var(--color-text-dark); font-weight: 500; text-align: right; }
-
-  .loading-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(28,24,21,0.5);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-  }
-
-  .loading-overlay.active { display: flex; }
-
-  .spinner {
-    width: 2rem;
-    height: 2rem;
-    border: 2.5px solid rgba(242,237,228,0.25);
-    border-top-color: var(--color-paper);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-  }
-
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  .submit-error {
-    background: rgba(184,92,76,0.1);
-    border: 1px solid rgba(184,92,76,0.3);
-    color: var(--color-error);
-    font-size: 0.85rem;
-    padding: 0.8rem 1rem;
-    border-radius: 8px;
-    margin-top: 1rem;
-    display: none;
-  }
-
-  @media (max-width: 860px) {
-    .intro-panel { padding: 2.2rem 1.6rem; min-height: 38vh; }
-    .trust-list { margin-top: 1.6rem; }
-    .intro-footer { display: none; }
-  }
-
-  @media (max-width: 480px) {
-    .row-2 { grid-template-columns: 1fr; }
-    .slot-grid { grid-template-columns: repeat(2, 1fr); }
-  }
+@media (max-width: 900px) {
+  .left { padding: 2rem 1.5rem; min-height: auto; }
+  .trust { margin-top: 1.5rem; }
+  .left-footer { display: none; }
+}
 </style>
 </head>
 <body>
 
-  <div class="intro-panel">
-    <div class="brand-mark">
+<div class="layout">
+
+  <!-- Left -->
+  <div class="left">
+    <div class="logo">
       Atelier Lumière
-      <span>Huidtherapie &amp; Aesthetiek</span>
+      <small>Huidtherapie &amp; Aesthetiek</small>
     </div>
 
-    <div class="intro-content">
-      <div class="intro-eyebrow">Persoonlijke intake</div>
-      <h1 class="intro-title">Een afspraak die<br><em>aandacht</em> verdient.</h1>
-      <p class="intro-desc">
-        Vertel ons kort wat je zoekt, dan stemmen we de behandeling en het moment volledig op jou af.
-        Dit duurt minder dan twee minuten.
-      </p>
-    </div>
+    <div class="hero">
+      <div class="hero-tag">Persoonlijke intake</div>
+      <h1>Een afspraak die<br><em>aandacht</em> verdient.</h1>
+      <p>Vertel ons wat je zoekt — we stemmen de behandeling en het moment volledig op jou af. Dit duurt minder dan twee minuten.</p>
 
-    <div class="trust-list">
-      <div class="trust-item">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Bevestiging en herinneringen per mail
-      </div>
-      <div class="trust-item">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Kosteloos verplaatsen tot 24 uur vooraf
-      </div>
-      <div class="trust-item">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Je gegevens worden vertrouwelijk behandeld
+      <div class="trust">
+        <div class="trust-item">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4" stroke="#9CAC9A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Bevestiging en herinneringen per mail
+        </div>
+        <div class="trust-item">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4" stroke="#9CAC9A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Gratis annuleren tot 24 uur vooraf
+        </div>
+        <div class="trust-item">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4" stroke="#9CAC9A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Uw gegevens worden vertrouwelijk behandeld
+        </div>
       </div>
     </div>
 
-    <div class="intro-footer">
-      Atelier Lumière · Antwerpsestraat 14, Mechelen
-    </div>
+    <div class="left-footer">Atelier Lumière · Antwerpsestraat 14, Mechelen</div>
   </div>
 
-  <div class="form-panel">
+  <!-- Right -->
+  <div class="right">
     <div class="form-wrap">
 
-      <div class="progress-track">
-        <div class="progress-fill" id="progressFill" style="width: 25%;"></div>
+      <div class="progress" id="progress">
+        <div class="progress-dot active" data-s="1"></div>
+        <div class="progress-dot" data-s="2"></div>
+        <div class="progress-dot" data-s="3"></div>
+        <div class="progress-dot" data-s="4"></div>
       </div>
 
-      <form id="intakeForm" novalidate>
+      <!-- Step 1: Behandeling -->
+      <div class="step active" id="s1">
+        <div class="step-eyebrow">Stap 1 van 4</div>
+        <div class="step-title">Welke behandeling?</div>
+        <div class="treatment-list" id="treatmentList"></div>
+        <div class="error-banner" id="err-treatment">Kies een behandeling om door te gaan.</div>
+        <div class="btn-row">
+          <button class="btn btn-primary" id="next1">Volgende</button>
+        </div>
+      </div>
 
-        <div class="step active" data-step="1">
-          <div class="step-label">Stap 1 van 4</div>
-          <h2 class="step-title">Welke behandeling?</h2>
-          <div class="treatment-grid" id="treatmentGrid" role="radiogroup" aria-label="Kies een behandeling"></div>
-          <div class="field-error" id="err-treatment" style="display:none;">Kies een behandeling om verder te gaan.</div>
-          <div class="btn-row">
-            <button type="button" class="btn btn-primary" id="toStep2">Volgende</button>
+      <!-- Step 2: Datum & tijd -->
+      <div class="step" id="s2">
+        <div class="step-eyebrow">Stap 2 van 4</div>
+        <div class="step-title">Wanneer past het u?</div>
+
+        <div class="calendar-wrap">
+          <div class="cal-header">
+            <button class="cal-nav" id="calPrev" aria-label="Vorige maand">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="cal-month" id="calMonth"></div>
+            <button class="cal-nav" id="calNext" aria-label="Volgende maand">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 12l4-4-4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+          <div class="cal-grid" id="calGrid"></div>
+        </div>
+
+        <div id="slotsWrap" style="display:none;">
+          <div class="slots-label">Beschikbare tijden</div>
+          <div id="slotsGrid" class="slots-grid"></div>
+        </div>
+
+        <div class="error-banner" id="err-slot">Kies een datum en tijdstip om door te gaan.</div>
+        <div class="btn-row">
+          <button class="btn btn-ghost" data-back="1">Terug</button>
+          <button class="btn btn-primary" id="next2">Volgende</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Gegevens -->
+      <div class="step" id="s3">
+        <div class="step-eyebrow">Stap 3 van 4</div>
+        <div class="step-title">Uw gegevens</div>
+
+        <div class="row-2">
+          <div class="field" id="fg-firstName">
+            <label for="firstName">Voornaam</label>
+            <input type="text" id="firstName" autocomplete="given-name">
+            <div class="field-err">Vul uw voornaam in.</div>
+          </div>
+          <div class="field" id="fg-lastName">
+            <label for="lastName">Achternaam</label>
+            <input type="text" id="lastName" autocomplete="family-name">
+            <div class="field-err">Vul uw achternaam in.</div>
           </div>
         </div>
 
-        <div class="step" data-step="2">
-          <div class="step-label">Stap 2 van 4</div>
-          <h2 class="step-title">Wanneer past het jou?</h2>
-          <div class="field-group">
-            <label class="field-label" for="dateInput">Gewenste datum</label>
-            <input type="date" id="dateInput" name="date" required>
-          </div>
-          <div id="slotContainer">
-            <div class="slot-empty">Kies eerst een datum om beschikbare tijden te zien.</div>
-          </div>
-          <div class="field-error" id="err-slot" style="display:none;">Kies een beschikbaar tijdslot.</div>
-          <div class="btn-row">
-            <button type="button" class="btn btn-secondary" data-back="1">Terug</button>
-            <button type="button" class="btn btn-primary" id="toStep3">Volgende</button>
-          </div>
+        <div class="field" id="fg-email">
+          <label for="email">E-mailadres</label>
+          <input type="email" id="email" autocomplete="email">
+          <div class="field-hint">Hier ontvangt u uw bevestiging en herinneringen.</div>
+          <div class="field-err">Vul een geldig e-mailadres in.</div>
         </div>
 
-        <div class="step" data-step="3">
-          <div class="step-label">Stap 3 van 4</div>
-          <h2 class="step-title">Jouw gegevens</h2>
-          <div class="row-2">
-            <div class="field-group">
-              <label class="field-label" for="firstName">Voornaam</label>
-              <input type="text" id="firstName" name="firstName" autocomplete="given-name" required>
-              <div class="field-error">Vul je voornaam in.</div>
-            </div>
-            <div class="field-group">
-              <label class="field-label" for="lastName">Achternaam</label>
-              <input type="text" id="lastName" name="lastName" autocomplete="family-name" required>
-              <div class="field-error">Vul je achternaam in.</div>
-            </div>
-          </div>
-          <div class="field-group">
-            <label class="field-label" for="email">E-mailadres</label>
-            <input type="email" id="email" name="email" autocomplete="email" required>
-            <div class="field-hint">Hier ontvang je je bevestiging en herinneringen.</div>
-            <div class="field-error">Vul een geldig e-mailadres in.</div>
-          </div>
-          <div class="field-group">
-            <label class="field-label" for="phone">Telefoonnummer</label>
-            <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="+32 4xx xx xx xx" required>
-            <div class="field-error">Vul een geldig telefoonnummer in.</div>
-          </div>
-          <div class="btn-row">
-            <button type="button" class="btn btn-secondary" data-back="2">Terug</button>
-            <button type="button" class="btn btn-primary" id="toStep4">Volgende</button>
-          </div>
+        <div class="field" id="fg-phone">
+          <label for="phone">Telefoonnummer</label>
+          <input type="tel" id="phone" autocomplete="tel" placeholder="+32 4xx xx xx xx">
+          <div class="field-err">Vul een geldig telefoonnummer in.</div>
         </div>
 
-        <div class="step" data-step="4">
-          <div class="step-label">Stap 4 van 4</div>
-          <h2 class="step-title">Nog even dit</h2>
-          <div class="field-group">
-            <label class="field-label" for="firstVisit">Is dit je eerste behandeling bij ons?</label>
-            <select id="firstVisit" name="firstVisit" required>
-              <option value="">Maak een keuze</option>
-              <option value="ja">Ja, eerste keer</option>
-              <option value="nee">Nee, ik ben al klant</option>
-            </select>
-            <div class="field-error">Maak een keuze.</div>
-          </div>
-          <div class="field-group">
-            <label class="field-label" for="notes">Iets dat we moeten weten? <span class="optional">(optioneel)</span></label>
-            <textarea id="notes" name="notes" placeholder="Allergieën, medicatie, wensen, of andere relevante info..."></textarea>
-          </div>
-          <div class="summary-box" id="summaryBox"></div>
-          <div class="submit-error" id="submitError">Er ging iets mis bij het versturen. Probeer het opnieuw.</div>
-          <div class="btn-row">
-            <button type="button" class="btn btn-secondary" data-back="3">Terug</button>
-            <button type="submit" class="btn btn-primary" id="submitBtn">Afspraak bevestigen</button>
-          </div>
+        <div class="btn-row">
+          <button class="btn btn-ghost" data-back="2">Terug</button>
+          <button class="btn btn-primary" id="next3">Volgende</button>
+        </div>
+      </div>
+
+      <!-- Step 4: Bevestigen -->
+      <div class="step" id="s4">
+        <div class="step-eyebrow">Stap 4 van 4</div>
+        <div class="step-title">Controleer uw afspraak</div>
+
+        <div class="field" id="fg-firstVisit">
+          <label for="firstVisit">Is dit uw eerste bezoek?</label>
+          <select id="firstVisit">
+            <option value="">Maak een keuze</option>
+            <option value="ja">Ja, eerste keer</option>
+            <option value="nee">Nee, ik ben al klant</option>
+          </select>
+          <div class="field-err">Maak een keuze.</div>
         </div>
 
-        <div class="step" data-step="5">
+        <div class="field">
+          <label for="notes">Opmerkingen <span class="optional">(optioneel)</span></label>
+          <textarea id="notes" placeholder="Allergieën, medicatie, wensen..."></textarea>
+        </div>
+
+        <div class="summary" id="summary"></div>
+
+        <div class="error-banner" id="err-submit">Er ging iets mis. Probeer het opnieuw.</div>
+
+        <div class="btn-row">
+          <button class="btn btn-ghost" data-back="3">Terug</button>
+          <button class="btn btn-primary" id="submitBtn">Afspraak bevestigen</button>
+        </div>
+      </div>
+
+      <!-- Step 5: Success -->
+      <div class="step" id="s5">
+        <div class="success-wrap">
           <div class="success-icon">
-            <svg width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4" stroke="#1C1815" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <svg width="22" height="22" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4" stroke="#1C1815" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-          <h2 class="step-title" style="margin-bottom: 0.6rem;">Je afspraak staat vast</h2>
-          <p style="font-size: 0.9rem; color: var(--color-text-muted); line-height: 1.6;">
-            Je ontvangt binnen enkele minuten een bevestiging per mail op het opgegeven adres,
-            met de mogelijkheid om je afspraak te annuleren of te verplaatsen.
-          </p>
-          <div class="summary-box" id="finalSummaryBox"></div>
+          <h2>Uw afspraak staat vast</h2>
+          <p>U ontvangt binnen enkele minuten een bevestigingsmail met de details van uw afspraak.</p>
+          <div class="summary" id="summaryFinal"></div>
         </div>
+      </div>
 
-      </form>
     </div>
   </div>
+</div>
 
-  <div class="loading-overlay" id="loadingOverlay">
-    <div class="spinner"></div>
-  </div>
+<div class="overlay" id="overlay"><div class="spinner"></div></div>
 
 <script>
-  const CONFIG = {
-    webhookUrl: "https://n8n-production-1412.up.railway.app/webhook/intake-booking",
-    treatments: [
-      { id: "botox", name: "Botox behandeling", meta: "Consult + behandeling · 30 min", price: "vanaf €280" },
-      { id: "filler", name: "Lip- of wangfillers", meta: "Consult + behandeling · 45 min", price: "vanaf €350" },
-      { id: "skinbooster", name: "Skinbooster", meta: "Behandeling · 30 min", price: "vanaf €220" },
-      { id: "consult", name: "Vrijblijvend adviesgesprek", meta: "Gesprek · 20 min", price: "gratis" }
-    ],
-    slotsPerDay: ["09:00", "10:00", "11:00", "13:00", "14:00", "15:00", "16:00", "17:00"]
+const WEBHOOK = 'https://n8n-production-1412.up.railway.app/webhook/b85c30f4-7352-4001-91f8-e3debe112136';
+const AVAILABILITY = 'https://n8n-production-1412.up.railway.app/webhook/availability';
+const ALL_SLOTS = ['09:00','10:00','11:00','13:00','14:00','15:00','16:00','17:00'];
+const TREATMENTS = [
+  { id:'botox', name:'Botox behandeling', meta:'Consult + behandeling · 30 min', price:'vanaf €280' },
+  { id:'filler', name:'Lip- of wangfillers', meta:'Consult + behandeling · 45 min', price:'vanaf €350' },
+  { id:'skinbooster', name:'Skinbooster', meta:'Behandeling · 30 min', price:'vanaf €220' },
+  { id:'consult', name:'Vrijblijvend adviesgesprek', meta:'Gesprek · 20 min', price:'gratis' },
+];
+
+let state = {
+  treatment: null,
+  date: null,       // 'YYYY-MM-DD'
+  slot: null,
+  calYear: null,
+  calMonth: null,
+};
+
+// ===== Init =====
+function init() {
+  const now = new Date();
+  state.calYear = now.getFullYear();
+  state.calMonth = now.getMonth();
+  renderTreatments();
+  renderCalendar();
+}
+
+// ===== Treatments =====
+function renderTreatments() {
+  const list = document.getElementById('treatmentList');
+  list.innerHTML = TREATMENTS.map(t => `
+    <div class="treatment-card" data-id="${t.id}" tabindex="0" role="button">
+      <div class="tc-info">
+        <div class="tc-name">${t.name}</div>
+        <div class="tc-meta">${t.meta}</div>
+      </div>
+      <div class="tc-price">${t.price}</div>
+    </div>
+  `).join('');
+
+  list.querySelectorAll('.treatment-card').forEach(card => {
+    const select = () => {
+      list.querySelectorAll('.treatment-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      state.treatment = TREATMENTS.find(t => t.id === card.dataset.id);
+      document.getElementById('err-treatment').style.display = 'none';
+    };
+    card.addEventListener('click', select);
+    card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(); } });
+  });
+}
+
+// ===== Calendar =====
+function renderCalendar() {
+  const months = ['Januari','Februari','Maart','April','Mei','Juni','Juli','Augustus','September','Oktober','November','December'];
+  document.getElementById('calMonth').textContent = `${months[state.calMonth]} ${state.calYear}`;
+
+  const grid = document.getElementById('calGrid');
+  const today = new Date();
+  today.setHours(0,0,0,0);
+
+  // Day of week headers
+  const dows = ['Ma','Di','Wo','Do','Vr','Za','Zo'];
+  let html = dows.map(d => `<div class="cal-dow">${d}</div>`).join('');
+
+  // First day of month (adjust: Mon=0)
+  const first = new Date(state.calYear, state.calMonth, 1);
+  let startDow = first.getDay(); // 0=Sun
+  startDow = startDow === 0 ? 6 : startDow - 1; // Mon=0
+
+  // Empty cells
+  for (let i = 0; i < startDow; i++) html += '<div class="cal-day empty"></div>';
+
+  // Days
+  const daysInMonth = new Date(state.calYear, state.calMonth + 1, 0).getDate();
+  for (let d = 1; d <= daysInMonth; d++) {
+    const date = new Date(state.calYear, state.calMonth, d);
+    const dateStr = `${state.calYear}-${String(state.calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const isPast = date < today;
+    const isToday = date.getTime() === today.getTime();
+    const isSelected = state.date === dateStr;
+    const isWeekend = date.getDay() === 0 || date.getDay() === 6;
+
+    let cls = 'cal-day';
+    if (isPast || isWeekend) cls += ' disabled';
+    if (isToday) cls += ' today';
+    if (isSelected) cls += ' selected';
+
+    html += `<div class="${cls}" data-date="${dateStr}">${d}</div>`;
+  }
+
+  grid.innerHTML = html;
+
+  grid.querySelectorAll('.cal-day:not(.disabled):not(.empty)').forEach(day => {
+    day.addEventListener('click', () => selectDate(day.dataset.date));
+  });
+}
+
+async function selectDate(dateStr) {
+  state.date = dateStr;
+  state.slot = null;
+
+  // Re-render calendar to show selection
+  renderCalendar();
+
+  // Show slots loading
+  const wrap = document.getElementById('slotsWrap');
+  const sGrid = document.getElementById('slotsGrid');
+  wrap.style.display = 'block';
+  sGrid.innerHTML = '<div class="slots-loading">Beschikbaarheid laden...</div>';
+
+  // Fetch taken slots
+  let taken = [];
+  try {
+    const res = await fetch(`${AVAILABILITY}?date=${dateStr}`);
+    const data = await res.json();
+    taken = data.taken || [];
+  } catch (e) {
+    taken = [];
+  }
+
+  // Render slots
+  sGrid.innerHTML = ALL_SLOTS.map(slot => {
+    const isTaken = taken.includes(slot);
+    return `<button type="button" class="slot-btn${isTaken ? '' : ''}" data-time="${slot}" ${isTaken ? 'disabled' : ''}>${slot}</button>`;
+  }).join('');
+
+  sGrid.querySelectorAll('.slot-btn:not(:disabled)').forEach(btn => {
+    btn.addEventListener('click', () => {
+      sGrid.querySelectorAll('.slot-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      state.slot = btn.dataset.time;
+      document.getElementById('err-slot').style.display = 'none';
+    });
+  });
+}
+
+// ===== Calendar nav =====
+document.getElementById('calPrev').addEventListener('click', () => {
+  const now = new Date();
+  if (state.calYear === now.getFullYear() && state.calMonth === now.getMonth()) return;
+  state.calMonth--;
+  if (state.calMonth < 0) { state.calMonth = 11; state.calYear--; }
+  state.date = null; state.slot = null;
+  document.getElementById('slotsWrap').style.display = 'none';
+  renderCalendar();
+});
+
+document.getElementById('calNext').addEventListener('click', () => {
+  state.calMonth++;
+  if (state.calMonth > 11) { state.calMonth = 0; state.calYear++; }
+  state.date = null; state.slot = null;
+  document.getElementById('slotsWrap').style.display = 'none';
+  renderCalendar();
+});
+
+// ===== Steps =====
+function goTo(n) {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById(`s${n}`).classList.add('active');
+
+  document.querySelectorAll('.progress-dot').forEach((dot, i) => {
+    dot.classList.remove('active','done');
+    if (i + 1 === n) dot.classList.add('active');
+    else if (i + 1 < n) dot.classList.add('done');
+  });
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.getElementById('next1').addEventListener('click', () => {
+  if (!state.treatment) { document.getElementById('err-treatment').style.display = 'block'; return; }
+  goTo(2);
+});
+
+document.getElementById('next2').addEventListener('click', () => {
+  if (!state.date || !state.slot) { document.getElementById('err-slot').style.display = 'block'; return; }
+  goTo(3);
+});
+
+document.getElementById('next3').addEventListener('click', () => {
+  let ok = true;
+  const fn = document.getElementById('firstName').value.trim();
+  const ln = document.getElementById('lastName').value.trim();
+  const em = document.getElementById('email').value.trim();
+  const ph = document.getElementById('phone').value.trim();
+  const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em);
+  const phoneOk = /^[+\d][\d\s()-]{6,}$/.test(ph);
+
+  setInvalid('fg-firstName', !fn);
+  setInvalid('fg-lastName', !ln);
+  setInvalid('fg-email', !emailOk);
+  setInvalid('fg-phone', !phoneOk);
+
+  if (!fn || !ln || !emailOk || !phoneOk) return;
+
+  renderSummary('summary');
+  goTo(4);
+});
+
+document.querySelectorAll('[data-back]').forEach(btn => {
+  btn.addEventListener('click', () => goTo(parseInt(btn.dataset.back)));
+});
+
+function setInvalid(groupId, isInvalid) {
+  document.getElementById(groupId).classList.toggle('invalid', isInvalid);
+}
+
+// ===== Summary =====
+function renderSummary(targetId) {
+  const months = ['jan','feb','mrt','apr','mei','jun','jul','aug','sep','okt','nov','dec'];
+  const [y,m,d] = state.date.split('-');
+  const dateStr = `${parseInt(d)} ${months[parseInt(m)-1]} ${y}`;
+
+  document.getElementById(targetId).innerHTML = `
+    <div class="summary-row"><span class="summary-label">Behandeling</span><span class="summary-value">${state.treatment.name}</span></div>
+    <div class="summary-row"><span class="summary-label">Datum</span><span class="summary-value">${dateStr}</span></div>
+    <div class="summary-row"><span class="summary-label">Tijdstip</span><span class="summary-value">${state.slot}</span></div>
+    <div class="summary-row"><span class="summary-label">Naam</span><span class="summary-value">${document.getElementById('firstName').value.trim()} ${document.getElementById('lastName').value.trim()}</span></div>
+    <div class="summary-row"><span class="summary-label">E-mail</span><span class="summary-value">${document.getElementById('email').value.trim()}</span></div>
+  `;
+}
+
+// ===== Submit =====
+document.getElementById('submitBtn').addEventListener('click', async () => {
+  const fv = document.getElementById('firstVisit').value;
+  setInvalid('fg-firstVisit', !fv);
+  if (!fv) return;
+
+  const payload = {
+    treatment: state.treatment.name,
+    treatmentId: state.treatment.id,
+    date: state.date,
+    time: state.slot,
+    firstName: document.getElementById('firstName').value.trim(),
+    lastName: document.getElementById('lastName').value.trim(),
+    email: document.getElementById('email').value.trim(),
+    phone: document.getElementById('phone').value.trim(),
+    firstVisit: fv,
+    notes: document.getElementById('notes').value.trim(),
+    submittedAt: new Date().toISOString(),
   };
 
-  let state = { treatment: null, date: null, slot: null };
-  const totalSteps = 4;
+  document.getElementById('overlay').classList.add('active');
+  document.getElementById('err-submit').style.display = 'none';
 
-  function renderTreatments() {
-    const grid = document.getElementById("treatmentGrid");
-    grid.innerHTML = CONFIG.treatments.map(t => `
-      <div class="treatment-card" tabindex="0" role="radio" aria-checked="false" data-id="${t.id}">
-        <div>
-          <div class="treatment-name">${t.name}</div>
-          <div class="treatment-meta">${t.meta}</div>
-        </div>
-        <div class="treatment-price">${t.price}</div>
-      </div>
-    `).join("");
-
-    grid.querySelectorAll(".treatment-card").forEach(card => {
-      card.addEventListener("click", () => selectTreatment(card));
-      card.addEventListener("keydown", e => {
-        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); selectTreatment(card); }
-      });
+  try {
+    await fetch(WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      mode: 'no-cors',
     });
+
+    renderSummary('summaryFinal');
+    goTo(5);
+  } catch (e) {
+    document.getElementById('err-submit').style.display = 'block';
+  } finally {
+    document.getElementById('overlay').classList.remove('active');
   }
+});
 
-  function selectTreatment(card) {
-    document.querySelectorAll(".treatment-card").forEach(c => {
-      c.classList.remove("selected");
-      c.setAttribute("aria-checked", "false");
-    });
-    card.classList.add("selected");
-    card.setAttribute("aria-checked", "true");
-    state.treatment = CONFIG.treatments.find(t => t.id === card.dataset.id);
-    document.getElementById("err-treatment").style.display = "none";
-  }
-
-  function renderSlots() {
-    const container = document.getElementById("slotContainer");
-    const dateVal = document.getElementById("dateInput").value;
-    if (!dateVal) {
-      container.innerHTML = '<div class="slot-empty">Kies eerst een datum om beschikbare tijden te zien.</div>';
-      return;
-    }
-    state.date = dateVal;
-    state.slot = null;
-
-    const taken = simulateTakenSlots(dateVal);
-
-    container.innerHTML = `
-      <div class="field-label" style="margin-top: 1rem;">Beschikbare tijden</div>
-      <div class="slot-grid">
-        ${CONFIG.slotsPerDay.map(time => `
-          <button type="button" class="slot-btn" data-time="${time}" ${taken.includes(time) ? "disabled" : ""}>
-            ${time}
-          </button>
-        `).join("")}
-      </div>
-    `;
-
-    container.querySelectorAll(".slot-btn:not(:disabled)").forEach(btn => {
-      btn.addEventListener("click", () => {
-        container.querySelectorAll(".slot-btn").forEach(b => b.classList.remove("selected"));
-        btn.classList.add("selected");
-        state.slot = btn.dataset.time;
-        document.getElementById("err-slot").style.display = "none";
-      });
-    });
-  }
-
-  function simulateTakenSlots(dateVal) {
-    const seed = dateVal.split("-").reduce((a, n) => a + parseInt(n), 0);
-    return CONFIG.slotsPerDay.filter((_, i) => (seed + i) % 4 === 0);
-  }
-
-  function goToStep(stepNum) {
-    document.querySelectorAll(".step").forEach(s => s.classList.remove("active"));
-    document.querySelector(`.step[data-step="${stepNum}"]`).classList.add("active");
-    const pct = Math.min(stepNum, totalSteps) / totalSteps * 100;
-    document.getElementById("progressFill").style.width = pct + "%";
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-
-  function markInvalid(fieldId, isInvalid) {
-    const input = document.getElementById(fieldId);
-    const group = input.closest(".field-group");
-    if (group) group.classList.toggle("invalid", isInvalid);
-  }
-
-  document.getElementById("toStep2").addEventListener("click", () => {
-    if (!state.treatment) {
-      document.getElementById("err-treatment").style.display = "block";
-      return;
-    }
-    goToStep(2);
-  });
-
-  document.getElementById("toStep3").addEventListener("click", () => {
-    let valid = true;
-    if (!state.date) { valid = false; }
-    if (!state.slot) {
-      document.getElementById("err-slot").style.display = "block";
-      valid = false;
-    }
-    if (!valid) return;
-    goToStep(3);
-  });
-
-  document.getElementById("toStep4").addEventListener("click", () => {
-    const firstName = document.getElementById("firstName");
-    const lastName = document.getElementById("lastName");
-    const email = document.getElementById("email");
-    const phone = document.getElementById("phone");
-    const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
-    const phoneValid = /^[+\d][\d\s()-]{6,}$/.test(phone.value.trim());
-
-    markInvalid("firstName", !firstName.value.trim());
-    markInvalid("lastName", !lastName.value.trim());
-    markInvalid("email", !emailValid);
-    markInvalid("phone", !phoneValid);
-
-    if (!firstName.value.trim() || !lastName.value.trim() || !emailValid || !phoneValid) return;
-    goToStep(4);
-  });
-
-  document.querySelectorAll("[data-back]").forEach(btn => {
-    btn.addEventListener("click", () => goToStep(parseInt(btn.dataset.back)));
-  });
-
-  document.getElementById("dateInput").addEventListener("change", renderSlots);
-  document.getElementById("dateInput").min = new Date().toISOString().split("T")[0];
-
-  document.getElementById("intakeForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const firstVisit = document.getElementById("firstVisit");
-    markInvalid("firstVisit", !firstVisit.value);
-    if (!firstVisit.value) return;
-
-    const payload = {
-      treatment: state.treatment.name,
-      treatmentId: state.treatment.id,
-      date: state.date,
-      time: state.slot,
-      firstName: document.getElementById("firstName").value.trim(),
-      lastName: document.getElementById("lastName").value.trim(),
-      email: document.getElementById("email").value.trim(),
-      phone: document.getElementById("phone").value.trim(),
-      firstVisit: firstVisit.value,
-      notes: document.getElementById("notes").value.trim(),
-      submittedAt: new Date().toISOString()
-    };
-
-    renderSummary(payload, "summaryBox");
-
-    const overlay = document.getElementById("loadingOverlay");
-    const errorBox = document.getElementById("submitError");
-    overlay.classList.add("active");
-    errorBox.style.display = "none";
-
-    try {
-      const res = await fetch(CONFIG.webhookUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
-
-      if (!res.ok) throw new Error("Webhook gaf een foutstatus terug");
-
-      renderSummary(payload, "finalSummaryBox");
-      goToStep(5);
-      document.getElementById("progressFill").style.width = "100%";
-    } catch (err) {
-      errorBox.style.display = "block";
-      console.error("Booking fout:", err);
-    } finally {
-      overlay.classList.remove("active");
-    }
-  });
-
-  function renderSummary(data, targetId) {
-    const dateFormatted = new Date(data.date).toLocaleDateString("nl-BE", { day: "numeric", month: "long", year: "numeric" });
-    document.getElementById(targetId).innerHTML = `
-      <div class="summary-row"><span class="summary-label">Behandeling</span><span class="summary-value">${data.treatment}</span></div>
-      <div class="summary-row"><span class="summary-label">Datum</span><span class="summary-value">${dateFormatted}</span></div>
-      <div class="summary-row"><span class="summary-label">Tijd</span><span class="summary-value">${data.time}</span></div>
-      <div class="summary-row"><span class="summary-label">Naam</span><span class="summary-value">${data.firstName} ${data.lastName}</span></div>
-      <div class="summary-row"><span class="summary-label">E-mail</span><span class="summary-value">${data.email}</span></div>
-    `;
-  }
-
-  renderTreatments();
+init();
 </script>
 
 </body>
