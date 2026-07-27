@@ -1,4 +1,4 @@
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET');
   
@@ -7,6 +7,6 @@ export default async function handler(req, res) {
     const data = await response.json();
     res.status(200).json(data);
   } catch(e) {
-    res.status(500).json({ error: 'Failed to fetch data' });
+    res.status(500).json({ error: e.message });
   }
 }
