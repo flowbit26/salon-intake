@@ -281,7 +281,12 @@ async function loadData() {
     const totaleOmzet = all.filter(r => r.status === 'confirmed' && r.treatment).reduce((sum, r) => sum + getPrijs(r.treatment), 0);
     const omzetMaand = all.filter(r => r.status === 'confirmed' && r.treatment && r.date && r.date.startsWith(dezeMaand)).reduce((sum, r) => sum + getPrijs(r.treatment), 0);
     const gemistOmzet = all.filter(r => (r.status === 'cancelled' || r.status === 'No Show' || r.status === 'no_show') && r.treatment).reduce((sum, r) => sum + getPrijs(r.treatment), 0);
-    const herboekingen = all.filter(r => r.status === 'confirmed' && r.treatment).length;
+    // Terugkerende klanten = emails die meer dan 1x bevestigd hebben geboekt
+    const emailCount = {};
+    all.filter(r => r.status === 'confirmed' && r.email).forEach(r => {
+      emailCount[r.email] = (emailCount[r.email] || 0) + 1;
+    });
+    const herboekingen = Object.values(emailCount).filter(count => count > 1).length;
 
     // Afspraken stats
     document.getElementById('statTotal').textContent = s.total;
