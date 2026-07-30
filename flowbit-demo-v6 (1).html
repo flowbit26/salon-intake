@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flowbit Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TOKEN SYSTEEM
+   Achtergrond:   #09090B (bijna zwart)
+   Kaart:         #111114
+   Rand:          rgba(255,255,255,0.07)
+   Tekst:         #FAFAFA
+   Gedempt:       #71717A
+   Accent groen:  #4ADE80
+   Wit accent:    #FAFAFA
+   Serif display: Playfair Display
+   Body:          DM Sans
+============================================================ */
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #09090B;
+  color: #FAFAFA;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ===== TOPBAR ===== */
+.topbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.25rem 3rem;
+  background: rgba(9,9,11,0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.logo-wrap { display: flex; align-items: center; gap: 10px; }
+.logo-mono { position: relative; width: 38px; height: 38px; }
+.logo-b { position: absolute; top: 0; left: 7px; font-size: 40px; font-weight: 900; line-height: 1; color: #27272A; font-family: 'DM Sans', sans-serif; }
+.logo-f { position: absolute; top: 0; left: 0; font-size: 40px; font-weight: 900; line-height: 1; color: #FAFAFA; font-family: 'DM Sans', sans-serif; }
+.logo-name { font-size: 15px; font-weight: 600; color: #FAFAFA; letter-spacing: -0.3px; }
+.logo-name span { color: #3F3F46; }
+
+.nav-dots { display: flex; align-items: center; gap: 6px; }
+.nav-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #27272A; cursor: pointer; transition: all 0.25s;
+}
+.nav-dot.active { background: #4ADE80; transform: scale(1.4); }
+.nav-dot.done { background: #3F3F46; }
+
+.nav-btns { display: flex; gap: 0.5rem; }
+.nbtn {
+  font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 500;
+  padding: 0.5rem 1.2rem; border-radius: 6px; cursor: pointer; border: none;
+  transition: all 0.15s;
+}
+.nbtn-ghost { background: transparent; border: 1px solid rgba(255,255,255,0.1); color: #71717A; }
+.nbtn-ghost:hover { color: #FAFAFA; border-color: rgba(255,255,255,0.25); }
+.nbtn-ghost:disabled { opacity: 0.3; cursor: not-allowed; }
+.nbtn-solid { background: #FAFAFA; color: #09090B; font-weight: 600; }
+.nbtn-solid:hover { background: #E4E4E7; }
+
+/* ===== SCREENS ===== */
+.screen { display: none; min-height: 100vh; padding-top: 72px; }
+.screen.active { display: block; animation: fadeUp 0.5s ease; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ===== S1: INTRO ===== */
+.intro {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  min-height: calc(100vh - 72px);
+  padding: 4rem 3rem; text-align: center;
+}
+
+.intro-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: #4ADE80; font-weight: 500; margin-bottom: 2.5rem;
+}
+
+.intro-eyebrow::before, .intro-eyebrow::after {
+  content: ''; display: block; width: 32px; height: 1px; background: #4ADE80; opacity: 0.4;
+}
+
+.intro-headline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 7vw, 6rem);
+  font-weight: 700; line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: #FAFAFA;
+  margin-bottom: 2rem;
+  max-width: 820px;
+}
+
+.intro-headline em {
+  font-style: italic; color: #71717A;
+}
+
+.intro-body {
+  font-size: 1.15rem; line-height: 1.7; color: #71717A;
+  max-width: 520px; margin: 0 auto 4rem;
+}
+
+.intro-numbers {
+  display: flex; gap: 4rem; justify-content: center;
+  margin-bottom: 5rem;
+}
+
+.intro-num-block { text-align: center; }
+
+.intro-num-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem; font-weight: 700; color: #FAFAFA;
+  line-height: 1; margin-bottom: 0.5rem;
+}
+
+.intro-num-label { font-size: 0.78rem; color: #52525B; letter-spacing: 0.06em; }
+
+.intro-flow {
+  display: flex; align-items: center; gap: 0;
+  background: #111114; border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px; overflow: hidden;
+  max-width: 700px; width: 100%;
+}
+
+.flow-item {
+  flex: 1; padding: 1.5rem 1.2rem; text-align: center;
+  border-right: 1px solid rgba(255,255,255,0.06);
+  transition: background 0.2s;
+}
+
+.flow-item:last-child { border-right: none; }
+.flow-item:hover { background: rgba(255,255,255,0.03); }
+
+.flow-item-name { font-size: 0.82rem; font-weight: 500; color: #A1A1AA; }
+.flow-item-icon { font-size: 1.2rem; margin-bottom: 0.5rem; }
+
+/* ===== S2: FORMULIER ===== */
+.form-screen {
+  display: grid; grid-template-columns: 1fr 1.1fr;
+  min-height: calc(100vh - 72px);
+}
+
+.form-left {
+  padding: 5rem 4rem;
+  display: flex; flex-direction: column; justify-content: center;
+  border-right: 1px solid rgba(255,255,255,0.06);
+}
+
+.section-eyebrow {
+  font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: #4ADE80; font-weight: 500; margin-bottom: 1.5rem;
+}
+
+.section-headline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 700; line-height: 1.1;
+  color: #FAFAFA; margin-bottom: 1.5rem;
+}
+
+.section-headline em { font-style: italic; color: #71717A; }
+
+.section-body { font-size: 0.95rem; line-height: 1.75; color: #71717A; margin-bottom: 2.5rem; }
+
+.check-list { display: flex; flex-direction: column; gap: 1rem; }
+.check-item { display: flex; align-items: flex-start; gap: 0.75rem; font-size: 0.88rem; color: #A1A1AA; line-height: 1.5; }
+.check-mark { color: #4ADE80; flex-shrink: 0; font-weight: 700; margin-top: 1px; }
+
+.form-right {
+  background: #F5F0E8;
+  display: flex; align-items: center; justify-content: center;
+  padding: 3rem 2.5rem;
+}
+
+.form-widget {
+  width: 100%; max-width: 400px;
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.12);
+}
+
+.fw-header {
+  padding: 1.5rem 1.5rem 0;
+  border-bottom: 1px solid #F3F0EB;
+}
+
+.fw-logo { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #9CA3AF; margin-bottom: 0.5rem; }
+.fw-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #111; margin-bottom: 1.2rem; }
+
+.fw-progress { height: 2px; background: #F3F0EB; margin: 0 -1.5rem; margin-bottom: 0; position: relative; }
+.fw-progress-fill { height: 100%; background: #111; transition: width 0.4s ease; }
+
+.fw-body { padding: 1.5rem; }
+
+.fw-step { display: none; animation: fadeUp 0.3s ease; }
+.fw-step.active { display: block; }
+
+.fw-step-label { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: #9CA3AF; margin-bottom: 0.4rem; }
+.fw-step-q { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #111; margin-bottom: 1.2rem; }
+
+.fw-options { display: flex; flex-direction: column; gap: 0.5rem; }
+.fw-option {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.85rem 1rem; border: 1.5px solid #E5E7EB;
+  border-radius: 8px; cursor: pointer; transition: all 0.15s;
+}
+.fw-option:hover { border-color: #111; }
+.fw-option.sel { border-color: #111; background: #FAFAFA; }
+.fw-opt-name { font-size: 0.88rem; font-weight: 500; color: #111; }
+.fw-opt-price { font-size: 0.8rem; color: #6B7280; }
+
+.cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; font-size: 0.85rem; font-weight: 600; color: #111; }
+.cal-g { display: grid; grid-template-columns: repeat(7,1fr); gap: 2px; }
+.cal-dow { font-size: 0.62rem; text-align: center; color: #9CA3AF; padding: 4px 0; font-weight: 600; }
+.cal-d {
+  aspect-ratio: 1; display: flex; align-items: center; justify-content: center;
+  font-size: 0.78rem; border-radius: 6px; cursor: pointer; color: #374151;
+  transition: all 0.12s;
+}
+.cal-d:hover:not(.past) { background: #F3F4F6; }
+.cal-d.sel { background: #111; color: #fff; }
+.cal-d.past { color: #D1D5DB; cursor: not-allowed; }
+.cal-d.today { outline: 1.5px solid #111; }
+
+.slots-g { display: grid; grid-template-columns: repeat(4,1fr); gap: 6px; margin-top: 1rem; }
+.slot {
+  padding: 0.5rem; text-align: center; border: 1.5px solid #E5E7EB;
+  border-radius: 6px; font-size: 0.78rem; font-weight: 500; color: #374151;
+  cursor: pointer; transition: all 0.12s;
+}
+.slot:hover { border-color: #111; }
+.slot.sel { background: #111; border-color: #111; color: #fff; }
+.slot.taken { opacity: 0.3; cursor: not-allowed; text-decoration: line-through; }
+
+.fw-field { margin-bottom: 0.85rem; }
+.fw-field label { display: block; font-size: 0.75rem; font-weight: 600; color: #374151; margin-bottom: 0.3rem; }
+.fw-field input {
+  width: 100%; padding: 0.65rem 0.85rem;
+  border: 1.5px solid #E5E7EB; border-radius: 8px;
+  font-family: 'DM Sans', sans-serif; font-size: 0.88rem; color: #111;
+  outline: none; transition: border 0.15s;
+}
+.fw-field input:focus { border-color: #111; }
+.fw-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+
+.fw-summary { background: #F9FAFB; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; }
+.fw-summary-row { display: flex; justify-content: space-between; padding: 0.35rem 0; border-bottom: 1px solid #F3F4F6; font-size: 0.82rem; }
+.fw-summary-row:last-child { border: none; }
+.fw-sl { color: #6B7280; }
+.fw-sv { color: #111; font-weight: 600; }
+
+.fw-btn-row { display: flex; gap: 0.5rem; margin-top: 1rem; }
+.fw-btn {
+  font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600;
+  padding: 0.75rem 1.2rem; border-radius: 8px; border: none; cursor: pointer;
+  transition: all 0.15s; flex: 1;
+}
+.fw-btn-p { background: #111; color: #fff; }
+.fw-btn-p:hover { background: #000; }
+.fw-btn-g { background: transparent; color: #6B7280; border: 1.5px solid #E5E7EB; flex: 0 0 auto; padding: 0.75rem 1rem; }
+
+.fw-success { text-align: center; padding: 1rem 0; }
+.fw-success-icon {
+  width: 48px; height: 48px; border-radius: 50%; background: #111;
+  display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;
+}
+.fw-success-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #111; margin-bottom: 0.5rem; }
+.fw-success-sub { font-size: 0.82rem; color: #6B7280; line-height: 1.6; }
+
+/* ===== S3: MAILS ===== */
+.mails-screen { padding: 5rem 3rem; max-width: 960px; margin: 0 auto; }
+
+.mail-nav { display: flex; gap: 0.4rem; margin-bottom: 3rem; flex-wrap: wrap; }
+.mail-tab-btn {
+  padding: 0.5rem 1.1rem; font-size: 0.78rem; font-weight: 500;
+  border-radius: 6px; border: 1px solid rgba(255,255,255,0.08);
+  background: transparent; color: #52525B; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; transition: all 0.15s;
+}
+.mail-tab-btn.active { background: #FAFAFA; color: #09090B; border-color: #FAFAFA; }
+.mail-tab-btn:hover:not(.active) { color: #A1A1AA; border-color: rgba(255,255,255,0.15); }
+
+.mail-pv { display: none; }
+.mail-pv.active { display: flex; justify-content: center; animation: fadeUp 0.3s ease; }
+
+.mail-shell {
+  background: #E8E0D5; border-radius: 16px; padding: 2rem 1.5rem;
+  width: 100%; max-width: 520px;
+}
+
+.mail-card {
+  background: #1C1815; border-radius: 14px; overflow: hidden;
+}
+
+.mail-stripe-top { height: 3px; background: linear-gradient(90deg,#9CAC9A,#6F7D6D); }
+.mail-brand-block { padding: 28px 32px 20px; text-align: center; border-bottom: 1px solid rgba(242,237,228,0.07); }
+.mail-brand-name { font-family: 'Playfair Display', serif; font-size: 17px; color: #F2EDE4; letter-spacing: 0.04em; }
+.mail-brand-sub { font-size: 7.5px; letter-spacing: 0.2em; text-transform: uppercase; color: #6F7D6D; margin-top: 3px; }
+
+.mail-body-block { padding: 24px 32px; }
+.mail-g { font-family: 'Playfair Display', serif; font-size: 18px; color: #F2EDE4; margin-bottom: 4px; }
+.mail-g-sub { font-family: 'Playfair Display', serif; font-size: 11px; color: #9CAC9A; font-style: italic; margin-bottom: 14px; }
+.mail-p { font-size: 11.5px; color: #8A8378; line-height: 1.7; margin-bottom: 14px; }
+
+.mail-details { border: 1px solid rgba(156,172,154,0.18); border-radius: 8px; overflow: hidden; margin-bottom: 18px; }
+.mail-drow { padding: 11px 15px; border-bottom: 1px solid rgba(242,237,228,0.05); }
+.mail-drow:last-child { border: none; }
+.mail-dl { font-size: 7px; letter-spacing: 0.14em; text-transform: uppercase; color: #6F7D6D; margin-bottom: 3px; }
+.mail-dv { font-family: 'Playfair Display', serif; font-size: 12px; color: #F2EDE4; }
+
+.mail-cta-cancel { display: inline-block; padding: 9px 20px; border: 1px solid rgba(242,237,228,0.12); border-radius: 6px; font-size: 9px; color: #8A8378; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 18px; }
+.mail-cta-rebook { display: inline-block; padding: 10px 22px; background: linear-gradient(135deg,#9CAC9A,#6F7D6D); border-radius: 6px; font-size: 9px; color: #1C1815; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 18px; }
+
+.mail-footer-block { padding: 14px 32px; text-align: center; border-top: 1px solid rgba(242,237,228,0.05); }
+.mail-footer-txt { font-size: 8px; color: #6F7D6D; letter-spacing: 0.1em; text-transform: uppercase; }
+.mail-stripe-bot { height: 3px; background: linear-gradient(90deg,#6F7D6D,#9CAC9A); }
+
+/* ===== S4: AGENDA ===== */
+.agenda-screen { padding: 5rem 3rem; max-width: 900px; margin: 0 auto; }
+
+.ag-filter { display: flex; gap: 0.5rem; margin-bottom: 2rem; }
+.ag-fb {
+  padding: 0.4rem 1rem; font-size: 0.75rem; font-weight: 500;
+  border-radius: 99px; border: 1px solid rgba(255,255,255,0.08);
+  background: transparent; color: #52525B; cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+}
+.ag-fb.active { background: #FAFAFA; color: #09090B; }
+
+.ag-day { margin-bottom: 2.5rem; }
+.ag-day-h { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+.ag-day-label { font-size: 0.8rem; font-weight: 600; color: #A1A1AA; }
+.ag-day-today { color: #4ADE80; }
+.ag-day-line { flex: 1; height: 1px; background: rgba(255,255,255,0.06); }
+.ag-day-count { font-size: 0.7rem; color: #52525B; background: #111114; padding: 2px 8px; border-radius: 99px; }
+
+.ag-card {
+  background: #111114; border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 10px; padding: 1.1rem 1.3rem; margin-bottom: 0.6rem;
+  display: grid; grid-template-columns: 56px 1fr auto;
+  gap: 1rem; align-items: center;
+  cursor: pointer; transition: border-color 0.15s;
+}
+.ag-card:hover { border-color: rgba(255,255,255,0.15); }
+.ag-card.cancelled { opacity: 0.38; }
+
+.ag-time { text-align: center; }
+.ag-time-v { font-size: 1rem; font-weight: 700; color: #FAFAFA; line-height: 1; }
+.ag-time-l { font-size: 0.6rem; color: #52525B; margin-top: 2px; }
+
+.ag-name { font-size: 0.9rem; font-weight: 600; color: #FAFAFA; margin-bottom: 2px; }
+.ag-treat { font-size: 0.75rem; color: #71717A; }
+
+.ag-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem; }
+.ag-badge { font-size: 0.68rem; font-weight: 600; padding: 3px 9px; border-radius: 99px; }
+.ag-badge-g { background: rgba(74,222,128,0.1); color: #4ADE80; }
+.ag-badge-r { background: rgba(248,113,113,0.1); color: #F87171; }
+.ag-badge-y { background: rgba(251,191,36,0.1); color: #FBBF24; }
+.ag-noshow {
+  font-family: 'DM Sans', sans-serif; font-size: 0.7rem; font-weight: 600;
+  padding: 4px 10px; border-radius: 5px;
+  border: 1px solid rgba(251,191,36,0.25); background: rgba(251,191,36,0.06);
+  color: #FBBF24; cursor: pointer;
+}
+
+/* PROFIEL PANEEL */
+.profile-overlay {
+  position: fixed; inset: 0; z-index: 40;
+  background: rgba(0,0,0,0.5);
+  display: none; align-items: flex-start; justify-content: flex-end;
+  padding-top: 72px;
+}
+.profile-overlay.open { display: flex; animation: fadeIn 0.2s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.profile-drawer {
+  width: 380px; height: calc(100vh - 72px);
+  background: #111114; border-left: 1px solid rgba(255,255,255,0.07);
+  overflow-y: auto; padding: 2rem;
+  animation: slideIn 0.25s ease;
+}
+@keyframes slideIn { from { transform: translateX(20px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+.pd-close { display: flex; justify-content: flex-end; margin-bottom: 1.5rem; }
+.pd-close-btn {
+  background: transparent; border: 1px solid rgba(255,255,255,0.08);
+  color: #52525B; font-family: 'DM Sans', sans-serif; font-size: 0.75rem;
+  padding: 4px 10px; border-radius: 6px; cursor: pointer;
+}
+.pd-close-btn:hover { color: #FAFAFA; }
+
+.pd-avatar {
+  width: 52px; height: 52px; border-radius: 50%;
+  background: #1E1E22; border: 1px solid rgba(255,255,255,0.08);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; font-weight: 700; color: #A1A1AA;
+  margin-bottom: 1rem;
+}
+
+.pd-name { font-size: 1.15rem; font-weight: 700; color: #FAFAFA; margin-bottom: 3px; }
+.pd-contact { font-size: 0.78rem; color: #52525B; margin-bottom: 2px; }
+
+.pd-divider { height: 1px; background: rgba(255,255,255,0.06); margin: 1.5rem 0; }
+
+.pd-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: 0.6rem; }
+.pd-stat { background: #09090B; border-radius: 8px; padding: 0.85rem; }
+.pd-stat-label { font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: #52525B; margin-bottom: 4px; }
+.pd-stat-value { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 400; color: #FAFAFA; line-height: 1; }
+.pd-stat-value.green { color: #4ADE80; }
+
+.pd-fav { background: #09090B; border-radius: 8px; padding: 0.85rem; margin-bottom: 1.5rem; }
+.pd-fav-label { font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: #52525B; margin-bottom: 6px; }
+.pd-fav-value { font-size: 0.88rem; font-weight: 600; color: #FAFAFA; }
+
+.pd-hist-label { font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: #52525B; margin-bottom: 1rem; }
+.pd-hist { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.pd-hist-item {
+  background: #09090B; border-radius: 8px; padding: 0.75rem;
+  border-left: 2px solid transparent;
+}
+.pd-hist-item.confirmed { border-left-color: #4ADE80; }
+.pd-hist-item.cancelled { border-left-color: #F87171; opacity: 0.5; }
+.pd-hist-item.noshow { border-left-color: #FBBF24; opacity: 0.5; }
+
+.pd-hist-top { display: flex; justify-content: space-between; margin-bottom: 3px; }
+.pd-hist-date { font-size: 0.75rem; font-weight: 600; color: #A1A1AA; }
+.pd-hist-status { font-size: 0.65rem; font-weight: 600; }
+.pd-hist-status.confirmed { color: #4ADE80; }
+.pd-hist-status.cancelled { color: #F87171; }
+.pd-hist-status.noshow { color: #FBBF24; }
+.pd-hist-treat { font-size: 0.73rem; color: #52525B; }
+
+/* ===== S5: DASHBOARD ===== */
+.dash-screen { padding: 5rem 3rem; max-width: 1080px; margin: 0 auto; }
+
+.dash-section-label { font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: #3F3F46; margin-bottom: 0.8rem; font-weight: 600; }
+
+.d-grid4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.8rem; margin-bottom: 0.8rem; }
+.d-card { background: #111114; border: 1px solid rgba(255,255,255,0.07); border-radius: 10px; padding: 1.3rem; }
+.d-label { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: #52525B; margin-bottom: 0.7rem; }
+.d-val { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 400; color: #FAFAFA; line-height: 1; margin-bottom: 4px; }
+.d-sub { font-size: 0.72rem; color: #3F3F46; }
+.d-green { color: #4ADE80; }
+.d-red { color: #F87171; }
+.d-yellow { color: #FBBF24; }
+
+.d-charts { display: grid; grid-template-columns: 220px 1fr; gap: 0.8rem; margin-bottom: 0.8rem; }
+.d-chart-title { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: #52525B; margin-bottom: 1rem; }
+
+.d-donut-wrap { display: flex; align-items: center; gap: 1.2rem; }
+.d-legend { display: flex; flex-direction: column; gap: 0.5rem; }
+.d-leg-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.73rem; }
+.d-leg-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.d-leg-label { color: #52525B; }
+.d-leg-val { color: #FAFAFA; font-weight: 600; margin-left: auto; padding-left: 0.6rem; }
+
+.d-bars { display: flex; flex-direction: column; gap: 0.7rem; }
+.d-bar-row { display: flex; align-items: center; gap: 0.8rem; }
+.d-bar-label { font-size: 0.73rem; color: #52525B; width: 110px; flex-shrink: 0; }
+.d-bar-track { flex: 1; height: 4px; background: rgba(255,255,255,0.05); border-radius: 99px; overflow: hidden; }
+.d-bar-fill { height: 100%; border-radius: 99px; }
+.d-bar-count { font-size: 0.73rem; color: #A1A1AA; font-weight: 600; width: 28px; text-align: right; }
+
+.d-table { background: #111114; border: 1px solid rgba(255,255,255,0.07); border-radius: 10px; overflow: hidden; }
+.d-table-head { padding: 1rem 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: #3F3F46; }
+table { width: 100%; border-collapse: collapse; }
+thead th { font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase; color: #3F3F46; padding: 0.7rem 1.2rem; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); }
+tbody tr { border-bottom: 1px solid rgba(255,255,255,0.04); transition: background 0.1s; }
+tbody tr:last-child { border: none; }
+tbody tr:hover { background: rgba(255,255,255,0.02); }
+tbody td { padding: 0.8rem 1.2rem; font-size: 0.8rem; color: #FAFAFA; }
+.td-m { color: #52525B; }
+.t-badge { font-size: 0.67rem; font-weight: 600; padding: 3px 9px; border-radius: 99px; }
+.t-bg { background: rgba(74,222,128,0.1); color: #4ADE80; }
+.t-br { background: rgba(248,113,113,0.1); color: #F87171; }
+.t-by { background: rgba(251,191,36,0.1); color: #FBBF24; }
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="logo-wrap">
+    <div class="logo-mono">
+      <div class="logo-b">B</div>
+      <div class="logo-f">F</div>
+    </div>
+    <div style="margin-left:8px;">
+      <div class="logo-name">FLOW<span>BIT</span></div>
+    </div>
+  </div>
+
+  <div class="nav-dots" id="navDots">
+    <div class="nav-dot active" onclick="goTo(0)" title="Intro"></div>
+    <div class="nav-dot" onclick="goTo(1)" title="Formulier"></div>
+    <div class="nav-dot" onclick="goTo(2)" title="Mails"></div>
+    <div class="nav-dot" onclick="goTo(3)" title="Agenda"></div>
+    <div class="nav-dot" onclick="goTo(4)" title="Dashboard"></div>
+    <div class="nav-dot" onclick="goTo(5)" title="Calculator"></div>
+  </div>
+
+  <div class="nav-btns">
+    <button class="nbtn nbtn-ghost" id="prevBtn" onclick="prev()" disabled>← Vorige</button>
+    <button class="nbtn nbtn-solid" id="nextBtn" onclick="next()">Volgende →</button>
+  </div>
+</div>
+
+<!-- S1: INTRO -->
+<div class="screen active" id="screen-0">
+  <div class="intro">
+    <div class="intro-eyebrow">Flowbit Salon Automation</div>
+    <div class="intro-headline">
+      Elke lege stoel<br>kost u <em>geld.</em>
+    </div>
+    <div class="intro-body">
+      Flowbit automatiseert uw boekingen, herinneringen en opvolging. Volledig in uw huisstijl. Zonder dat u iets hoeft te doen.
+    </div>
+
+    <div class="intro-numbers">
+      <div class="intro-num-block">
+        <div class="intro-num-value">38%</div>
+        <div class="intro-num-label">minder no-shows*</div>
+      </div>
+      <div class="intro-num-block">
+        <div class="intro-num-value">€1.200</div>
+        <div class="intro-num-label">gered per maand**</div>
+      </div>
+
+    </div>
+    <div style="font-size:0.65rem;color:#3F3F46;margin-top:-3rem;margin-bottom:3rem;">* Bewezen door meerdere wetenschappelijke studies, waaronder Imperial College London en het Journal of Medical Internet Research &nbsp;&nbsp; ** Gebaseerd op 80 afspraken/maand aan €280 gemiddeld met 15% no-show rate en 38% reductie</div>
+
+    <div class="intro-flow">
+      <div class="flow-item">
+        <div class="flow-item-name">Klant boekt</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-item-name">Bevestiging</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-item-name">Herinneringen</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-item-name">Dashboard</div>
+      </div>
+      <div class="flow-item">
+        <div class="flow-item-name">Herboekingen</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S2: FORMULIER -->
+<div class="screen" id="screen-1">
+  <div class="form-screen">
+    <div class="form-left">
+      <div class="section-eyebrow">Boekingsformulier</div>
+      <div class="section-headline">Klanten boeken zelf,<br><em>24/7.</em></div>
+      <div class="section-body">Een professionele boekingspagina volledig in uw huisstijl. U hoeft de telefoon niet meer op te nemen.</div>
+      <div class="check-list">
+        <div class="check-item"><span class="check-mark"><span style="color:#4ADE80;font-weight:700;"></span></span> Geen dubbele boekingen mogelijk</div>
+        <div class="check-item"><span class="check-mark"><span style="color:#4ADE80;font-weight:700;"></span></span> Bezette tijdsloten automatisch geblokkeerd</div>
+        <div class="check-item"><span class="check-mark"><span style="color:#4ADE80;font-weight:700;"></span></span> Bevestigingsmail volgt automatisch</div>
+        <div class="check-item"><span class="check-mark"><span style="color:#4ADE80;font-weight:700;"></span></span> Volledig in uw huisstijl</div>
+      </div>
+    </div>
+    <div class="form-right">
+      <div class="form-widget">
+        <div class="fw-header">
+          <div class="fw-logo">Atelier Lumière</div>
+          <div class="fw-title">Maak een afspraak</div>
+          <div class="fw-progress"><div class="fw-progress-fill" id="fwProgress" style="width:25%"></div></div>
+        </div>
+        <div class="fw-body">
+
+          <!-- Stap 1 -->
+          <div class="fw-step active" id="fws-1">
+            <div class="fw-step-label">Behandeling</div>
+            <div class="fw-step-q">Wat mag het zijn?</div>
+            <div class="fw-options">
+              <div class="fw-option" onclick="selTreat(this)">
+                <div><div class="fw-opt-name">Botox behandeling</div><div style="font-size:0.72rem;color:#9CA3AF;">30 min</div></div>
+                <div class="fw-opt-price">€280</div>
+              </div>
+              <div class="fw-option" onclick="selTreat(this)">
+                <div><div class="fw-opt-name">Lip- of wangfillers</div><div style="font-size:0.72rem;color:#9CA3AF;">45 min</div></div>
+                <div class="fw-opt-price">€350</div>
+              </div>
+              <div class="fw-option" onclick="selTreat(this)">
+                <div><div class="fw-opt-name">Skinbooster</div><div style="font-size:0.72rem;color:#9CA3AF;">30 min</div></div>
+                <div class="fw-opt-price">€220</div>
+              </div>
+            </div>
+            <div class="fw-btn-row"><button class="fw-btn fw-btn-p" onclick="fwNext()">Volgende</button></div>
+          </div>
+
+          <!-- Stap 2 -->
+          <div class="fw-step" id="fws-2">
+            <div class="fw-step-label">Datum & tijd</div>
+            <div class="fw-step-q">Wanneer schikt het?</div>
+            <div class="cal-header">
+              <span id="calMonthLabel"></span>
+            </div>
+            <div class="cal-g" id="calGrid"></div>
+            <div class="slots-g" id="slotsGrid"></div>
+            <div class="fw-btn-row">
+              <button class="fw-btn fw-btn-g" onclick="fwPrev()">←</button>
+              <button class="fw-btn fw-btn-p" onclick="fwNext()">Volgende</button>
+            </div>
+          </div>
+
+          <!-- Stap 3 -->
+          <div class="fw-step" id="fws-3">
+            <div class="fw-step-label">Uw gegevens</div>
+            <div class="fw-step-q">Wie bent u?</div>
+            <div class="fw-row2">
+              <div class="fw-field"><label>Voornaam</label><input type="text" value="Emma" placeholder="Sophie"></div>
+              <div class="fw-field"><label>Achternaam</label><input type="text" value="Claes" placeholder="Verbeeck"></div>
+            </div>
+            <div class="fw-field"><label>E-mail</label><input type="email" value="emma@email.com"></div>
+            <div class="fw-field"><label>Telefoon</label><input type="tel" value="+32 476 12 34 56"></div>
+            <div class="fw-btn-row">
+              <button class="fw-btn fw-btn-g" onclick="fwPrev()">←</button>
+              <button class="fw-btn fw-btn-p" onclick="fwNext()">Volgende</button>
+            </div>
+          </div>
+
+          <!-- Stap 4 -->
+          <div class="fw-step" id="fws-4">
+            <div class="fw-step-label">Bevestiging</div>
+            <div class="fw-step-q">Klopt alles?</div>
+            <div class="fw-summary">
+              <div class="fw-summary-row"><span class="fw-sl">Behandeling</span><span class="fw-sv">Botox behandeling</span></div>
+              <div class="fw-summary-row"><span class="fw-sl">Datum</span><span class="fw-sv">8 augustus 2026</span></div>
+              <div class="fw-summary-row"><span class="fw-sl">Tijdstip</span><span class="fw-sv">14:00</span></div>
+              <div class="fw-summary-row"><span class="fw-sl">Naam</span><span class="fw-sv">Emma Claes</span></div>
+            </div>
+            <div class="fw-btn-row">
+              <button class="fw-btn fw-btn-g" onclick="fwPrev()">←</button>
+              <button class="fw-btn fw-btn-p" onclick="fwSubmit()">Bevestigen</button>
+            </div>
+          </div>
+
+          <!-- Succes -->
+          <div class="fw-step" id="fws-5">
+            <div class="fw-success">
+              <div class="fw-success-icon">
+                <svg width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+              <div class="fw-success-title">Afspraak bevestigd</div>
+              <div class="fw-success-sub">Emma ontvangt nu automatisch een bevestigingsmail met annuleerknop en alle details.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S3: MAILS -->
+<div class="screen" id="screen-2">
+  <div class="mails-screen">
+    <div class="section-eyebrow">Automatische mails</div>
+    <div class="section-headline" style="margin-bottom:0.8rem;">De juiste mail,<br>op het juiste moment.</div>
+    <div class="section-body" style="margin-bottom:2.5rem;">Elke klant ontvangt de juiste mail automatisch in uw huisstijl, zonder dat u iets hoeft te doen.</div>
+
+    <div class="mail-nav">
+      <button class="mail-tab-btn active" onclick="showMail('confirm', this)">Bevestiging</button>
+      <button class="mail-tab-btn" onclick="showMail('cancel', this)">Annulering</button>
+      <button class="mail-tab-btn" onclick="showMail('r24', this)">24u herinnering</button>
+      <button class="mail-tab-btn" onclick="showMail('r2', this)">2u herinnering</button>
+      <button class="mail-tab-btn" onclick="showMail('noshow', this)">No-show opvolging</button>
+    </div>
+
+    <div class="mail-pv active" id="mpv-confirm">
+      <div class="mail-shell">
+        <div class="mail-card">
+          <div class="mail-stripe-top"></div>
+          <div class="mail-brand-block"><div class="mail-brand-name">ATELIER LUMIÈRE</div><div class="mail-brand-sub">Huidtherapie &amp; Aesthetiek</div></div>
+          <div class="mail-body-block">
+            <div class="mail-g">Beste Emma,</div>
+            <div class="mail-g-sub">Uw afspraak is bevestigd.</div>
+            <div class="mail-p">Wij kijken ernaar uit u te verwelkomen in ons atelier.</div>
+            <div class="mail-details">
+              <div class="mail-drow"><div class="mail-dl">Behandeling</div><div class="mail-dv">Botox behandeling</div></div>
+              <div class="mail-drow"><div class="mail-dl">Datum</div><div class="mail-dv">8 augustus 2026</div></div>
+              <div class="mail-drow"><div class="mail-dl">Tijdstip</div><div class="mail-dv">14:00</div></div>
+            </div>
+            <div><span class="mail-cta-cancel">Afspraak annuleren</span></div>
+          </div>
+          <div class="mail-footer-block"><div class="mail-footer-txt">Atelier Lumière · Mechelen</div></div>
+          <div class="mail-stripe-bot"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mail-pv" id="mpv-cancel">
+      <div class="mail-shell">
+        <div class="mail-card">
+          <div class="mail-stripe-top"></div>
+          <div class="mail-brand-block"><div class="mail-brand-name">ATELIER LUMIÈRE</div><div class="mail-brand-sub">Huidtherapie &amp; Aesthetiek</div></div>
+          <div class="mail-body-block">
+            <div class="mail-g">Beste Emma,</div>
+            <div class="mail-g-sub">Uw afspraak is geannuleerd.</div>
+            <div class="mail-p">We bevestigen dat uw afspraak op <strong style="color:#F2EDE4;">8 augustus 2026</strong> om <strong style="color:#F2EDE4;">14:00</strong> geannuleerd is. U bent altijd welkom om een nieuw moment in te plannen.</div>
+            <div><span class="mail-cta-rebook">Nieuwe afspraak maken</span></div>
+          </div>
+          <div class="mail-footer-block"><div class="mail-footer-txt">Atelier Lumière · Mechelen</div></div>
+          <div class="mail-stripe-bot"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mail-pv" id="mpv-r24">
+      <div class="mail-shell">
+        <div class="mail-card">
+          <div class="mail-stripe-top"></div>
+          <div class="mail-brand-block"><div class="mail-brand-name">ATELIER LUMIÈRE</div><div class="mail-brand-sub">Huidtherapie &amp; Aesthetiek</div></div>
+          <div class="mail-body-block">
+            <div class="mail-g">Beste Emma,</div>
+            <div class="mail-g-sub">Uw afspraak is morgen.</div>
+            <div class="mail-p">Een vriendelijke herinnering aan uw afspraak morgen. Wij kijken ernaar uit u te verwelkomen.</div>
+            <div class="mail-details">
+              <div class="mail-drow"><div class="mail-dl">Behandeling</div><div class="mail-dv">Botox behandeling</div></div>
+              <div class="mail-drow"><div class="mail-dl">Datum</div><div class="mail-dv">8 augustus 2026</div></div>
+              <div class="mail-drow"><div class="mail-dl">Tijdstip</div><div class="mail-dv">14:00</div></div>
+            </div>
+            <div><span class="mail-cta-cancel">Afspraak annuleren</span></div>
+          </div>
+          <div class="mail-footer-block"><div class="mail-footer-txt">Atelier Lumière · Mechelen</div></div>
+          <div class="mail-stripe-bot"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mail-pv" id="mpv-r2">
+      <div class="mail-shell">
+        <div class="mail-card">
+          <div class="mail-stripe-top"></div>
+          <div class="mail-brand-block"><div class="mail-brand-name">ATELIER LUMIÈRE</div><div class="mail-brand-sub">Huidtherapie &amp; Aesthetiek</div></div>
+          <div class="mail-body-block">
+            <div class="mail-g">Beste Emma,</div>
+            <div class="mail-g-sub">Nog 2 uur wij staan klaar voor u.</div>
+            <div class="mail-p">Een laatste herinnering aan uw afspraak van vandaag.</div>
+            <div class="mail-details">
+              <div class="mail-drow"><div class="mail-dl">Behandeling</div><div class="mail-dv">Botox behandeling</div></div>
+              <div class="mail-drow"><div class="mail-dl">Tijdstip</div><div class="mail-dv">14:00 vandaag</div></div>
+            </div>
+            <div><span class="mail-cta-cancel">Afspraak annuleren</span></div>
+          </div>
+          <div class="mail-footer-block"><div class="mail-footer-txt">Atelier Lumière · Mechelen</div></div>
+          <div class="mail-stripe-bot"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mail-pv" id="mpv-noshow">
+      <div class="mail-shell">
+        <div class="mail-card">
+          <div class="mail-stripe-top"></div>
+          <div class="mail-brand-block"><div class="mail-brand-name">ATELIER LUMIÈRE</div><div class="mail-brand-sub">Huidtherapie &amp; Aesthetiek</div></div>
+          <div class="mail-body-block">
+            <div class="mail-g">Beste Emma,</div>
+            <div class="mail-g-sub">We hebben u vandaag gemist.</div>
+            <div class="mail-p">Het overkomt iedereen weleens. U bent van harte welkom om op een ander moment langs te komen.</div>
+            <div><span class="mail-cta-rebook">Nieuwe afspraak maken</span></div>
+          </div>
+          <div class="mail-footer-block"><div class="mail-footer-txt">Atelier Lumière · Mechelen</div></div>
+          <div class="mail-stripe-bot"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S4: AGENDA -->
+<div class="screen" id="screen-3">
+  <div class="agenda-screen">
+    <div class="section-eyebrow">Salon agenda</div>
+    <div class="section-headline" style="margin-bottom:0.8rem;">Alles in één overzicht.</div>
+    <div class="section-body" style="margin-bottom:2rem;">Klik op een klant om hun volledige profiel en geschiedenis te zien.</div>
+
+    <div class="ag-filter">
+      <button class="ag-fb active">Alle statussen</button>
+      <button class="ag-fb">Bevestigd</button>
+      <button class="ag-fb">Geannuleerd</button>
+    </div>
+
+    <div class="ag-day">
+      <div class="ag-day-h">
+        <div class="ag-day-label ag-day-today">maandag 29 juli 2026 Vandaag</div>
+        <div class="ag-day-count">3 afspraken</div>
+        <div class="ag-day-line"></div>
+      </div>
+      <div class="ag-card" onclick="openProfile('emma')">
+        <div class="ag-time"><div class="ag-time-v">09:00</div><div class="ag-time-l">uur</div></div>
+        <div><div class="ag-name">Emma Claes</div><div class="ag-treat">Botox behandeling</div></div>
+        <div class="ag-right" onclick="event.stopPropagation()"><span class="ag-badge ag-badge-g">Bevestigd</span><button class="ag-noshow">No-show</button></div>
+      </div>
+      <div class="ag-card" onclick="openProfile('thomas')">
+        <div class="ag-time"><div class="ag-time-v">11:00</div><div class="ag-time-l">uur</div></div>
+        <div><div class="ag-name">Thomas Peeters</div><div class="ag-treat">Skinbooster</div></div>
+        <div class="ag-right" onclick="event.stopPropagation()"><span class="ag-badge ag-badge-g">Bevestigd</span><button class="ag-noshow">No-show</button></div>
+      </div>
+      <div class="ag-card cancelled">
+        <div class="ag-time"><div class="ag-time-v">14:00</div><div class="ag-time-l">uur</div></div>
+        <div><div class="ag-name">Julie Wouters</div><div class="ag-treat">Lip- of wangfillers</div></div>
+        <div class="ag-right"><span class="ag-badge ag-badge-r">Geannuleerd</span></div>
+      </div>
+    </div>
+
+    <div class="ag-day">
+      <div class="ag-day-h">
+        <div class="ag-day-label">dinsdag 30 juli 2026</div>
+        <div class="ag-day-count">2 afspraken</div>
+        <div class="ag-day-line"></div>
+      </div>
+      <div class="ag-card" onclick="openProfile('sarah')">
+        <div class="ag-time"><div class="ag-time-v">10:00</div><div class="ag-time-l">uur</div></div>
+        <div><div class="ag-name">Sarah Dubois</div><div class="ag-treat">Botox behandeling</div></div>
+        <div class="ag-right" onclick="event.stopPropagation()"><span class="ag-badge ag-badge-g">Bevestigd</span><button class="ag-noshow">No-show</button></div>
+      </div>
+      <div class="ag-card">
+        <div class="ag-time"><div class="ag-time-v">16:00</div><div class="ag-time-l">uur</div></div>
+        <div><div class="ag-name">Kevin Janssen</div><div class="ag-treat">Skinbooster</div></div>
+        <div class="ag-right"><span class="ag-badge ag-badge-y">No-show</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S5: DASHBOARD -->
+<div class="screen" id="screen-4">
+  <div class="dash-screen">
+    <div class="section-eyebrow" style="margin-bottom:0.5rem;">Live dashboard</div>
+    <div class="section-headline" style="margin-bottom:0.5rem;">Uw cijfers,<br><em>live.</em></div>
+    <div class="section-body" style="margin-bottom:2.5rem;">Real-time inzicht in uw boekingen, no-show rate en omzet.</div>
+
+    <div class="dash-section-label">Afspraken</div>
+    <div class="d-grid4" style="margin-bottom:1.5rem;">
+      <div class="d-card"><div class="d-label">Totaal</div><div class="d-val">142</div><div class="d-sub">alle tijden</div></div>
+      <div class="d-card"><div class="d-label">Bevestigd</div><div class="d-val d-green">118</div><div class="d-sub">83% van totaal</div></div>
+      <div class="d-card"><div class="d-label">Annuleringsrate</div><div class="d-val d-red">12%</div><div class="d-sub">17 geannuleerd</div></div>
+      <div class="d-card"><div class="d-label">No-show rate</div><div class="d-val d-yellow">4,2%</div><div class="d-sub">6 no-shows</div></div>
+    </div>
+
+    <div class="dash-section-label">Omzet</div>
+    <div class="d-grid4" style="margin-bottom:1.5rem;">
+      <div class="d-card" style="border-color:rgba(74,222,128,0.2);"><div class="d-label">Totale omzet</div><div class="d-val d-green">€33.460</div><div class="d-sub">alle bevestigde afspraken</div></div>
+      <div class="d-card" style="border-color:rgba(74,222,128,0.2);"><div class="d-label">Omzet deze maand</div><div class="d-val d-green">€4.760</div><div class="d-sub">juli 2026</div></div>
+      <div class="d-card" style="border-color:rgba(248,113,113,0.2);"><div class="d-label">Gemiste omzet</div><div class="d-val d-red">€6.490</div><div class="d-sub">no-shows en annuleringen</div></div>
+      <div class="d-card"><div class="d-label">Terugkerende klanten</div><div class="d-val">14</div><div class="d-sub">meer dan 1x geboekt</div></div>
+    </div>
+
+    <div class="d-charts" style="margin-bottom:1.5rem;">
+      <div class="d-card">
+        <div class="d-chart-title">Verdeling</div>
+        <div class="d-donut-wrap">
+          <svg width="80" height="80" viewBox="0 0 80 80">
+            <circle cx="40" cy="40" r="28" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="10"/>
+            <circle cx="40" cy="40" r="28" fill="none" stroke="#4ADE80" stroke-width="10" stroke-dasharray="147 29" stroke-dashoffset="44" stroke-linecap="round" transform="rotate(-90 40 40)"/>
+            <circle cx="40" cy="40" r="28" fill="none" stroke="#F87171" stroke-width="10" stroke-dasharray="22 154" stroke-dashoffset="-103" stroke-linecap="round" transform="rotate(-90 40 40)"/>
+            <circle cx="40" cy="40" r="28" fill="none" stroke="#FBBF24" stroke-width="10" stroke-dasharray="7 169" stroke-dashoffset="-125" stroke-linecap="round" transform="rotate(-90 40 40)"/>
+            <text x="40" y="37" text-anchor="middle" font-family="Playfair Display,serif" font-size="14" fill="#FAFAFA">142</text>
+            <text x="40" y="48" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="6" fill="#52525B" letter-spacing="1">TOTAAL</text>
+          </svg>
+          <div class="d-legend">
+            <div class="d-leg-item"><div class="d-leg-dot" style="background:#4ADE80;"></div><span class="d-leg-label">Bevestigd</span><span class="d-leg-val">118</span></div>
+            <div class="d-leg-item"><div class="d-leg-dot" style="background:#F87171;"></div><span class="d-leg-label">Geannuleerd</span><span class="d-leg-val">17</span></div>
+            <div class="d-leg-item"><div class="d-leg-dot" style="background:#FBBF24;"></div><span class="d-leg-label">No-show</span><span class="d-leg-val">6</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="d-card">
+        <div class="d-chart-title">Behandelingen</div>
+        <div class="d-bars">
+          <div class="d-bar-row"><div class="d-bar-label">Botox</div><div class="d-bar-track"><div class="d-bar-fill" style="width:85%;background:#4ADE80;opacity:0.6;"></div></div><div class="d-bar-count">68x</div></div>
+          <div class="d-bar-row"><div class="d-bar-label">Lip- &amp; wangfillers</div><div class="d-bar-track"><div class="d-bar-fill" style="width:45%;background:#A1A1AA;opacity:0.5;"></div></div><div class="d-bar-count">36x</div></div>
+          <div class="d-bar-row"><div class="d-bar-label">Skinbooster</div><div class="d-bar-track"><div class="d-bar-fill" style="width:30%;background:#A1A1AA;opacity:0.4;"></div></div><div class="d-bar-count">24x</div></div>
+          <div class="d-bar-row"><div class="d-bar-label">Adviesgesprek</div><div class="d-bar-track"><div class="d-bar-fill" style="width:17%;background:#A1A1AA;opacity:0.3;"></div></div><div class="d-bar-count">14x</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-table">
+      <div class="d-table-head">Recente afspraken</div>
+      <table>
+        <thead><tr><th>Naam</th><th>Behandeling</th><th>Datum</th><th>Waarde</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Emma Claes</td><td class="td-m">Botox behandeling</td><td class="td-m">29 jul 2026</td><td class="td-m">€280</td><td><span class="t-badge t-bg">Bevestigd</span></td></tr>
+          <tr><td>Thomas Peeters</td><td class="td-m">Skinbooster</td><td class="td-m">29 jul 2026</td><td class="td-m">€220</td><td><span class="t-badge t-bg">Bevestigd</span></td></tr>
+          <tr><td>Julie Wouters</td><td class="td-m">Lip- of wangfillers</td><td class="td-m">29 jul 2026</td><td class="td-m">€350</td><td><span class="t-badge t-br">Geannuleerd</span></td></tr>
+          <tr><td>Sarah Dubois</td><td class="td-m">Botox behandeling</td><td class="td-m">30 jul 2026</td><td class="td-m">€280</td><td><span class="t-badge t-bg">Bevestigd</span></td></tr>
+          <tr><td>Kevin Janssen</td><td class="td-m">Skinbooster</td><td class="td-m">30 jul 2026</td><td class="td-m">€220</td><td><span class="t-badge t-by">No-show</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- PROFIEL OVERLAY -->
+<div class="profile-overlay" id="profileOverlay" onclick="closeProfile(event)">
+  <div class="profile-drawer" id="profileDrawer">
+    <div class="pd-close"><button class="pd-close-btn" onclick="closeProfile()">Sluiten ✕</button></div>
+    <div id="profileContent"></div>
+  </div>
+</div>
+
+<script>
+// ===== NAVIGATIE =====
+let cur = 0;
+const total = 6;
+
+function goTo(n) {
+  document.getElementById(`screen-${cur}`).classList.remove('active');
+  cur = n;
+  document.getElementById(`screen-${cur}`).classList.add('active');
+  updateNav();
+  if (n === 1) buildCal();
+}
+
+function next() {
+  if (cur < total - 1) goTo(cur + 1);
+  else goTo(0);
+}
+function prev() { if (cur > 0) goTo(cur - 1); }
+
+function updateNav() {
+  document.getElementById('prevBtn').disabled = cur === 0;
+  const nb = document.getElementById('nextBtn');
+  nb.textContent = cur === total - 1 ? 'Opnieuw →' : 'Volgende →';
+  nb.onclick = cur === total - 1 ? () => goTo(0) : next;
+  document.querySelectorAll('.nav-dot').forEach((d, i) => {
+    d.classList.remove('active','done');
+    if (i === cur) d.classList.add('active');
+    else if (i < cur) d.classList.add('done');
+  });
+}
+
+// ===== FORMULIER =====
+let fwStep = 1;
+function fwNext() {
+  document.getElementById(`fws-${fwStep}`).classList.remove('active');
+  fwStep = Math.min(fwStep + 1, 5);
+  document.getElementById(`fws-${fwStep}`).classList.add('active');
+  document.getElementById('fwProgress').style.width = (fwStep >= 4 ? 100 : fwStep * 25) + '%';
+}
+function fwPrev() {
+  document.getElementById(`fws-${fwStep}`).classList.remove('active');
+  fwStep = Math.max(fwStep - 1, 1);
+  document.getElementById(`fws-${fwStep}`).classList.add('active');
+  document.getElementById('fwProgress').style.width = (fwStep * 25) + '%';
+}
+function fwSubmit() { fwNext(); }
+function selTreat(el) {
+  document.querySelectorAll('.fw-option').forEach(o => o.classList.remove('sel'));
+  el.classList.add('sel');
+}
+
+function buildCal() {
+  const now = new Date();
+  const y = now.getFullYear(), m = now.getMonth();
+  const months = ['januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december'];
+  document.getElementById('calMonthLabel').textContent = months[m] + ' ' + y;
+  const dows = ['Ma','Di','Wo','Do','Vr','Za','Zo'];
+  let html = dows.map(d => `<div class="cal-dow">${d}</div>`).join('');
+  let fd = new Date(y, m, 1).getDay();
+  fd = fd === 0 ? 6 : fd - 1;
+  for (let i = 0; i < fd; i++) html += '<div></div>';
+  const days = new Date(y, m + 1, 0).getDate();
+  for (let d = 1; d <= days; d++) {
+    const past = d < now.getDate();
+    const today = d === now.getDate();
+    html += `<div class="cal-d${past?' past':''}${today?' today':''}" onclick="selDay(this,${d})">${d}</div>`;
+  }
+  document.getElementById('calGrid').innerHTML = html;
+  buildSlots([]);
+}
+
+function selDay(el, d) {
+  if (el.classList.contains('past')) return;
+  document.querySelectorAll('.cal-d').forEach(x => x.classList.remove('sel'));
+  el.classList.add('sel');
+  buildSlots(d % 3 === 0 ? ['10:00','14:00'] : ['11:00']);
+}
+
+function buildSlots(taken) {
+  const slots = ['09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00'];
+  document.getElementById('slotsGrid').innerHTML = slots.map(s =>
+    `<div class="slot${taken.includes(s)?' taken':''}" onclick="selSlot(this)">${s}</div>`
+  ).join('');
+}
+
+function selSlot(el) {
+  if (el.classList.contains('taken')) return;
+  document.querySelectorAll('.slot').forEach(s => s.classList.remove('sel'));
+  el.classList.add('sel');
+}
+
+// ===== MAILS =====
+function showMail(id, btn) {
+  document.querySelectorAll('.mail-pv').forEach(m => m.classList.remove('active'));
+  document.querySelectorAll('.mail-tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(`mpv-${id}`).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ===== KLANTPROFIEL =====
+const profiles = {
+  emma: {
+    naam: 'Emma Claes', email: 'emma@email.com', tel: '+32 476 12 34 56',
+    initialen: 'EC', bezoeken: 8, omzet: 2240, favoriet: 'Botox behandeling',
+    hist: [
+      { date: '29 jul 2026', time: '09:00', treat: 'Botox behandeling', status: 'confirmed', prijs: 280 },
+      { date: '15 jun 2026', time: '11:00', treat: 'Botox behandeling', status: 'confirmed', prijs: 280 },
+      { date: '3 mei 2026', time: '14:00', treat: 'Lip- of wangfillers', status: 'confirmed', prijs: 350 },
+      { date: '12 apr 2026', time: '10:00', treat: 'Botox behandeling', status: 'cancelled', prijs: 280 },
+      { date: '1 mrt 2026', time: '09:00', treat: 'Skinbooster', status: 'confirmed', prijs: 220 },
+    ]
+  },
+  thomas: {
+    naam: 'Thomas Peeters', email: 'thomas@email.com', tel: '+32 498 45 67 89',
+    initialen: 'TP', bezoeken: 3, omzet: 660, favoriet: 'Skinbooster',
+    hist: [
+      { date: '29 jul 2026', time: '11:00', treat: 'Skinbooster', status: 'confirmed', prijs: 220 },
+      { date: '10 jun 2026', time: '13:00', treat: 'Skinbooster', status: 'confirmed', prijs: 220 },
+      { date: '22 apr 2026', time: '15:00', treat: 'Skinbooster', status: 'no_show', prijs: 220 },
+    ]
+  },
+  sarah: {
+    naam: 'Sarah Dubois', email: 'sarah@email.com', tel: '+32 485 23 45 67',
+    initialen: 'SD', bezoeken: 5, omzet: 1400, favoriet: 'Botox behandeling',
+    hist: [
+      { date: '30 jul 2026', time: '10:00', treat: 'Botox behandeling', status: 'confirmed', prijs: 280 },
+      { date: '18 jun 2026', time: '10:00', treat: 'Botox behandeling', status: 'confirmed', prijs: 280 },
+      { date: '5 mei 2026', time: '11:00', treat: 'Lip- of wangfillers', status: 'confirmed', prijs: 350 },
+    ]
+  }
+};
+
+function openProfile(id) {
+  const p = profiles[id];
+  if (!p) return;
+
+  const statusLabel = { confirmed: 'Bevestigd', cancelled: 'Geannuleerd', no_show: 'No-show' };
+  const statusCls = { confirmed: 'confirmed', cancelled: 'cancelled', no_show: 'noshow' };
+
+  document.getElementById('profileContent').innerHTML = `
+    <div class="pd-avatar">${p.initialen}</div>
+    <div class="pd-name">${p.naam}</div>
+    <div class="pd-contact">${p.email}</div>
+    <div class="pd-contact">${p.tel}</div>
+    <div class="pd-divider"></div>
+    <div class="pd-stats">
+      <div class="pd-stat"><div class="pd-stat-label">Bezoeken</div><div class="pd-stat-value green">${p.bezoeken}</div></div>
+      <div class="pd-stat"><div class="pd-stat-label">Totale omzet</div><div class="pd-stat-value green">€${p.omzet}</div></div>
+    </div>
+    <div class="pd-fav"><div class="pd-fav-label">Favoriete behandeling</div><div class="pd-fav-value">${p.favoriet}</div></div>
+    <div class="pd-hist-label">Geschiedenis</div>
+    <div class="pd-hist">
+      ${p.hist.map(h => `
+        <div class="pd-hist-item ${statusCls[h.status]}">
+          <div class="pd-hist-top">
+            <div class="pd-hist-date">${h.date} ${h.time}</div>
+            <div class="pd-hist-status ${statusCls[h.status]}">${statusLabel[h.status]}</div>
+          </div>
+          <div style="display:flex;justify-content:space-between;">
+            <div class="pd-hist-treat">${h.treat}</div>
+            <div style="font-size:0.72rem;color:#4ADE80;font-weight:600;">€${h.prijs}</div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+
+  document.getElementById('profileOverlay').classList.add('open');
+}
+
+function closeProfile(e) {
+  if (!e || e.target === document.getElementById('profileOverlay') || e.target.classList.contains('pd-close-btn')) {
+    document.getElementById('profileOverlay').classList.remove('open');
+  }
+}
+
+buildCal();
+</script>
+
+<!-- S6: CALCULATOR -->
+<div class="screen" id="screen-5">
+  <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - 72px);padding:4rem 2rem;text-align:center;">
+    
+    <div class="section-eyebrow" style="margin-bottom:1.5rem;">Hoeveel verliest uw salon nu?</div>
+    <div class="section-headline" style="margin-bottom:1rem;max-width:600px;">Bereken uw gemiste<br><em>omzet per maand.</em></div>
+    <div class="section-body" style="margin-bottom:3rem;max-width:480px;">Vul uw situatie in en zie direct wat automatische herinneringen voor u kunnen betekenen.</div>
+
+    <div style="background:#111114;border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:2.5rem;max-width:520px;width:100%;text-align:left;">
+      
+      <div style="display:flex;flex-direction:column;gap:1.5rem;margin-bottom:2rem;">
+        
+        <div>
+          <label style="font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:#52525B;font-weight:600;display:block;margin-bottom:0.6rem;">Afspraken per maand</label>
+          <input type="range" min="20" max="200" value="80" step="5" id="sliderAfspraken" oninput="calcUpdate()" style="width:100%;accent-color:#4ADE80;">
+          <div style="display:flex;justify-content:space-between;margin-top:4px;">
+            <span style="font-size:0.72rem;color:#3F3F46;">20</span>
+            <span style="font-size:1rem;font-weight:700;color:#FAFAFA;" id="valAfspraken">80</span>
+            <span style="font-size:0.72rem;color:#3F3F46;">200</span>
+          </div>
+        </div>
+
+        <div>
+          <label style="font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:#52525B;font-weight:600;display:block;margin-bottom:0.6rem;">Gemiddelde behandelprijs</label>
+          <input type="range" min="50" max="500" value="280" step="10" id="sliderPrijs" oninput="calcUpdate()" style="width:100%;accent-color:#4ADE80;">
+          <div style="display:flex;justify-content:space-between;margin-top:4px;">
+            <span style="font-size:0.72rem;color:#3F3F46;">€50</span>
+            <span style="font-size:1rem;font-weight:700;color:#FAFAFA;" id="valPrijs">€280</span>
+            <span style="font-size:0.72rem;color:#3F3F46;">€500</span>
+          </div>
+        </div>
+
+        <div>
+          <label style="font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:#52525B;font-weight:600;display:block;margin-bottom:0.6rem;">Huidige no-show rate</label>
+          <input type="range" min="5" max="30" value="15" step="1" id="sliderNoshow" oninput="calcUpdate()" style="width:100%;accent-color:#4ADE80;">
+          <div style="display:flex;justify-content:space-between;margin-top:4px;">
+            <span style="font-size:0.72rem;color:#3F3F46;">5%</span>
+            <span style="font-size:1rem;font-weight:700;color:#FAFAFA;" id="valNoshow">15%</span>
+            <span style="font-size:0.72rem;color:#3F3F46;">30%</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Resultaten -->
+      <div style="background:#09090B;border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+          <div>
+            <div style="font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:#3F3F46;margin-bottom:6px;">Huidige gemiste omzet</div>
+            <div style="font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:400;color:#F87171;line-height:1;" id="calcVerlies">€3.360</div>
+            <div style="font-size:0.7rem;color:#3F3F46;margin-top:3px;">per maand</div>
+          </div>
+          <div>
+            <div style="font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:#3F3F46;margin-bottom:6px;">Potentieel gered*</div>
+            <div style="font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:400;color:#4ADE80;line-height:1;" id="calcGered">€1.277</div>
+            <div style="font-size:0.7rem;color:#3F3F46;margin-top:3px;">per maand</div>
+          </div>
+        </div>
+        <div style="height:1px;background:rgba(255,255,255,0.05);margin-bottom:1rem;"></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <div style="font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:#3F3F46;margin-bottom:4px;">Kost van Flowbit</div>
+            <div style="font-size:0.88rem;font-weight:600;color:#A1A1AA;">€500 / maand</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:#3F3F46;margin-bottom:4px;">Netto voordeel</div>
+            <div style="font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:400;color:#4ADE80;" id="calcNetto">+€777</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="font-size:0.68rem;color:#3F3F46;line-height:1.6;">
+        * Gebaseerd op 38% reductie van no-shows door automatische herinneringen, bewezen door meerdere wetenschappelijke studies waaronder Imperial College London en het Journal of Medical Internet Research. Resultaten variëren per salon.
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+function calcUpdate() {
+  const afspraken = parseInt(document.getElementById('sliderAfspraken').value);
+  const prijs = parseInt(document.getElementById('sliderPrijs').value);
+  const noshow = parseInt(document.getElementById('sliderNoshow').value);
+
+  document.getElementById('valAfspraken').textContent = afspraken;
+  document.getElementById('valPrijs').textContent = '€' + prijs;
+  document.getElementById('valNoshow').textContent = noshow + '%';
+
+  const verlies = Math.round(afspraken * (noshow / 100) * prijs);
+  const gered = Math.round(verlies * 0.38);
+  const netto = gered - 500;
+
+  document.getElementById('calcVerlies').textContent = '€' + verlies.toLocaleString('nl-BE');
+  document.getElementById('calcGered').textContent = '€' + gered.toLocaleString('nl-BE');
+  document.getElementById('calcNetto').textContent = (netto >= 0 ? '+' : '') + '€' + netto.toLocaleString('nl-BE');
+  document.getElementById('calcNetto').style.color = netto >= 0 ? '#4ADE80' : '#F87171';
+}
+calcUpdate();
+</script>
+
+</body>
+</html>
