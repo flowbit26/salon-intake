@@ -487,6 +487,68 @@ tbody td { padding: 0.8rem 1.2rem; font-size: 0.8rem; color: #FAFAFA; }
 .t-bg { background: rgba(74,222,128,0.1); color: #4ADE80; }
 .t-br { background: rgba(248,113,113,0.1); color: #F87171; }
 .t-by { background: rgba(251,191,36,0.1); color: #FBBF24; }
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .topbar { padding: 0.8rem 1rem; }
+  .logo-name { font-size: 14px; }
+  .nav-dots { gap: 5px; }
+  .nav-dot { width: 7px; height: 7px; }
+  .nbtn { padding: 0.4rem 0.8rem; font-size: 0.72rem; }
+
+  /* Intro */
+  .intro { padding: 2rem 1.2rem; }
+  .intro-headline { font-size: clamp(2rem, 8vw, 3rem); }
+  .intro-body { font-size: 0.95rem; }
+  .intro-numbers { gap: 1.5rem; flex-wrap: wrap; }
+  .intro-num-value { font-size: 2.5rem; }
+  .intro-flow { flex-direction: column; }
+  .flow-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); padding: 0.8rem 1rem; }
+  .flow-item:last-child { border-bottom: none; }
+
+  /* Formulier */
+  .form-screen { grid-template-columns: 1fr; }
+  .form-left { display: none; }
+  .form-right { padding: 1.5rem 1rem; min-height: calc(100vh - 72px); }
+  .form-widget { max-width: 100%; }
+  .slots-g { grid-template-columns: repeat(3, 1fr); }
+
+  /* Mails */
+  .mails-screen { padding: 2rem 1rem; }
+  .section-headline { font-size: clamp(1.6rem, 6vw, 2.5rem); }
+  .mail-nav { gap: 0.3rem; }
+  .mail-tab-btn { padding: 0.4rem 0.7rem; font-size: 0.7rem; }
+  .mail-shell { padding: 1rem; }
+  .mail-brand-block { padding: 20px 20px 16px; }
+  .mail-body-block { padding: 16px 20px; }
+  .mail-footer-block { padding: 10px 20px; }
+
+  /* Agenda */
+  .agenda-screen { padding: 2rem 1rem; }
+  .ag-card { grid-template-columns: 48px 1fr; gap: 0.6rem; }
+  .ag-right { grid-column: 1 / -1; flex-direction: row; justify-content: space-between; align-items: center; padding-top: 0.4rem; border-top: 1px solid rgba(255,255,255,0.05); }
+
+  /* Dashboard */
+  .dash-screen { padding: 2rem 1rem; }
+  .d-grid4 { grid-template-columns: repeat(2, 1fr); }
+  .d-charts { grid-template-columns: 1fr; }
+  table { font-size: 0.72rem; }
+  thead th { padding: 0.6rem 0.8rem; }
+  tbody td { padding: 0.6rem 0.8rem; }
+
+  /* Calculator */
+  .calc-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .intro-numbers { gap: 1rem; }
+  .intro-num-value { font-size: 2rem; }
+  .d-grid4 { grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+  .d-val { font-size: 1.6rem; }
+  .mail-g { font-size: 16px; }
+  .nbtn-ghost { display: none; }
+}
+
 </style>
 </head>
 <body>
@@ -1144,7 +1206,7 @@ buildCal();
 
       <!-- Resultaten -->
       <div style="background:#09090B;border-radius:12px;padding:1.5rem;margin-bottom:1.5rem;">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;" class="calc-grid">
           <div>
             <div style="font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:#3F3F46;margin-bottom:6px;">Huidige gemiste omzet</div>
             <div style="font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:400;color:#F87171;line-height:1;" id="calcVerlies">€3.360</div>
