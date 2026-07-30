@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agenda — Flowbit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0F172A;
+  --bg-card: #1E293B;
+  --border: rgba(255,255,255,0.06);
+  --text: #F8FAFC;
+  --muted: #64748B;
+  --accent: #94A3B8;
+  --confirmed: #34D399;
+  --cancelled: #F87171;
+  --noshow: #FBBF24;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.2rem 2rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+  position: sticky; top: 0; z-index: 10;
+}
+
+.logo-wrap { display: flex; align-items: center; gap: 12px; }
+.logo-mono { position: relative; width: 44px; height: 44px; flex-shrink: 0; }
+.logo-b { position: absolute; top: 0; left: 8px; font-size: 46px; font-weight: 900; line-height: 1; color: #334155; }
+.logo-f { position: absolute; top: 0; left: 0; font-size: 46px; font-weight: 900; line-height: 1; color: #fff; }
+.logo-text { display: flex; flex-direction: column; }
+.logo-name { font-size: 18px; font-weight: 900; color: #fff; letter-spacing: -0.5px; }
+.logo-name span { color: #475569; }
+.logo-tag { font-size: 7px; letter-spacing: 3px; text-transform: uppercase; color: #334155; }
+
+.topbar-right { display: flex; align-items: center; gap: 0.8rem; }
+.btn { background: var(--bg-card); border: 1px solid var(--border); color: var(--accent); font-family: 'Inter', sans-serif; font-size: 0.78rem; font-weight: 600; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer; transition: background 0.15s; }
+.btn:hover { background: #2D3748; }
+.last-updated { font-size: 0.72rem; color: var(--muted); }
+
+/* Nav tabs */
+.nav-tabs {
+  display: flex;
+  gap: 0;
+  padding: 1rem 2rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.tab {
+  padding: 0.6rem 1.2rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s;
+}
+
+.tab.active { color: var(--text); border-bottom-color: #94A3B8; }
+.tab:hover { color: var(--text); }
+
+/* Main */
+.main { padding: 1.5rem 2rem; max-width: 1100px; margin: 0 auto; }
+
+/* Filter bar */
+.filter-bar {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 0.4rem 1rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border-radius: 99px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: 'Inter', sans-serif;
+}
+
+.filter-btn.active { background: #F8FAFC; color: #0F172A; border-color: #F8FAFC; }
+.filter-btn:hover:not(.active) { border-color: var(--accent); color: var(--text); }
+
+/* Agenda dagen */
+.day-group { margin-bottom: 2rem; }
+
+.day-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.8rem;
+}
+
+.day-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.day-date {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.day-count {
+  font-size: 0.72rem;
+  color: var(--muted);
+  background: var(--bg-card);
+  padding: 2px 8px;
+  border-radius: 99px;
+}
+
+.day-line { flex: 1; height: 1px; background: var(--border); }
+
+/* Afspraak kaart */
+.appointment-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  margin-bottom: 0.6rem;
+  display: grid;
+  grid-template-columns: 60px 1fr auto;
+  gap: 1rem;
+  align-items: center;
+  transition: border-color 0.15s;
+}
+
+.appointment-card:hover { border-color: rgba(255,255,255,0.1); }
+.appointment-card.cancelled { opacity: 0.45; }
+.appointment-card.no_show { opacity: 0.45; }
+
+.appt-time {
+  text-align: center;
+}
+
+.appt-time-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1;
+}
+
+.appt-time-label {
+  font-size: 0.65rem;
+  color: var(--muted);
+  margin-top: 2px;
+  letter-spacing: 0.05em;
+}
+
+.appt-info {}
+
+.appt-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.appt-treatment {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.appt-contact {
+  font-size: 0.75rem;
+  color: var(--muted);
+  opacity: 0.7;
+}
+
+.appt-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.status-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 99px;
+  letter-spacing: 0.05em;
+}
+
+.badge-confirmed { background: rgba(52,211,153,0.1); color: var(--confirmed); }
+.badge-cancelled { background: rgba(248,113,113,0.1); color: var(--cancelled); }
+.badge-no_show { background: rgba(251,191,36,0.1); color: var(--noshow); }
+
+.noshow-btn {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(251,191,36,0.3);
+  background: rgba(251,191,36,0.06);
+  color: var(--noshow);
+  cursor: pointer;
+  transition: all 0.15s;
+  letter-spacing: 0.03em;
+}
+
+.noshow-btn:hover { background: rgba(251,191,36,0.15); border-color: var(--noshow); }
+.noshow-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* Loading / empty */
+.loading { display: flex; align-items: center; justify-content: center; padding: 4rem; flex-direction: column; gap: 1rem; }
+.spinner { width: 2rem; height: 2rem; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text { font-size: 0.85rem; color: var(--muted); }
+
+.empty { text-align: center; padding: 3rem; color: var(--muted); font-size: 0.9rem; }
+
+/* Toast notificatie */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: #1E293B;
+  border: 1px solid rgba(52,211,153,0.3);
+  color: #34D399;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.8rem 1.4rem;
+  border-radius: 8px;
+  display: none;
+  z-index: 100;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+@media (max-width: 700px) {
+  .appointment-card { grid-template-columns: 50px 1fr; }
+  .appt-actions { grid-column: 1 / -1; flex-direction: row; justify-content: space-between; align-items: center; }
+  .main { padding: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo-wrap">
+    <div class="logo-mono">
+      <div class="logo-b">B</div>
+      <div class="logo-f">F</div>
+    </div>
+    <div class="logo-text">
+      <div class="logo-name">FLOW<span>BIT</span></div>
+      <div class="logo-tag">Salon Agenda</div>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <span class="last-updated" id="lastUpdated">Laden...</span>
+    <button class="btn" onclick="loadData()">↻ Vernieuwen</button>
+    <button class="btn" onclick="window.location.href='dashboard.html'">Dashboard</button>
+  </div>
+</div>
+
+<div class="nav-tabs">
+  <div class="tab active" onclick="setTab('aankomend')">Aankomend</div>
+  <div class="tab" onclick="setTab('vandaag')">Vandaag</div>
+  <div class="tab" onclick="setTab('alles')">Alles</div>
+</div>
+
+<div class="main">
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="setFilter('alles')">Alle statussen</button>
+    <button class="filter-btn" onclick="setFilter('confirmed')">Bevestigd</button>
+    <button class="filter-btn" onclick="setFilter('cancelled')">Geannuleerd</button>
+    <button class="filter-btn" onclick="setFilter('No Show')">No-show</button>
+  </div>
+
+  <div id="loadingState" class="loading">
+    <div class="spinner"></div>
+    <div class="loading-text">Agenda laden...</div>
+  </div>
+
+  <div id="agendaContent" style="display:none;"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const AGENDA_URL = 'https://salon-intake.vercel.app/api/agenda';
+const NOSHOW_URL = 'https://n8n-production-1412.up.railway.app/webhook/no-show';
+const MONTHS = ['januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december'];
+const DAYS = ['zondag','maandag','dinsdag','woensdag','donderdag','vrijdag','zaterdag'];
+
+let allAppointments = [];
+let currentTab = 'aankomend';
+let currentFilter = 'alles';
+
+function formatDate(d) {
+  if (!d) return '—';
+  const dt = new Date(d + 'T12:00:00');
+  return `${DAYS[dt.getDay()]} ${dt.getDate()} ${MONTHS[dt.getMonth()]} ${dt.getFullYear()}`;
+}
+
+function isToday(d) {
+  const today = new Date().toISOString().split('T')[0];
+  return d === today;
+}
+
+function isFuture(d) {
+  const today = new Date().toISOString().split('T')[0];
+  return d >= today;
+}
+
+function statusLabel(s) {
+  return { confirmed: 'Bevestigd', cancelled: 'Geannuleerd', 'No Show': 'No-show', no_show: 'No-show' }[s] || s;
+}
+
+function statusClass(s) {
+  if (s === 'confirmed') return 'badge-confirmed';
+  if (s === 'cancelled') return 'badge-cancelled';
+  return 'badge-no_show';
+}
+
+function setTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  render();
+}
+
+function setFilter(filter) {
+  currentFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  render();
+}
+
+function showToast(msg, isError = false) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.style.borderColor = isError ? 'rgba(248,113,113,0.3)' : 'rgba(52,211,153,0.3)';
+  toast.style.color = isError ? '#F87171' : '#34D399';
+  toast.style.display = 'block';
+  setTimeout(() => { toast.style.display = 'none'; }, 3000);
+}
+
+async function markNoShow(appointmentId, btn) {
+  btn.disabled = true;
+  btn.textContent = 'Bezig...';
+
+  try {
+    await fetch(`${NOSHOW_URL}?appointment_id=${appointmentId}`, { mode: 'no-cors' });
+    showToast('No-show gemarkeerd — mail verstuurd.');
+    setTimeout(loadData, 1500);
+  } catch(e) {
+    btn.disabled = false;
+    btn.textContent = 'No-show';
+    showToast('Fout bij markeren.', true);
+  }
+}
+
+function render() {
+  const container = document.getElementById('agendaContent');
+
+  let filtered = allAppointments;
+
+  // Tab filter
+  if (currentTab === 'vandaag') {
+    filtered = filtered.filter(a => isToday(a.date));
+  } else if (currentTab === 'aankomend') {
+    filtered = filtered.filter(a => isFuture(a.date));
+  }
+
+  // Status filter
+  if (currentFilter !== 'alles') {
+    filtered = filtered.filter(a => a.status === currentFilter);
+  }
+
+  if (filtered.length === 0) {
+    container.innerHTML = '<div class="empty">Geen afspraken gevonden.</div>';
+    return;
+  }
+
+  // Groepeer per datum
+  const grouped = {};
+  filtered.forEach(a => {
+    if (!grouped[a.date]) grouped[a.date] = [];
+    grouped[a.date].push(a);
+  });
+
+  const sortedDates = Object.keys(grouped).sort();
+
+  container.innerHTML = sortedDates.map(date => {
+    const appts = grouped[date];
+    const todayClass = isToday(date) ? ' style="color:#34D399;"' : '';
+
+    return `
+      <div class="day-group">
+        <div class="day-header">
+          <div class="day-date"${todayClass}>${formatDate(date)}${isToday(date) ? ' — Vandaag' : ''}</div>
+          <div class="day-count">${appts.length} afspraak${appts.length > 1 ? 'en' : ''}</div>
+          <div class="day-line"></div>
+        </div>
+        ${appts.map(a => {
+          const isConfirmed = a.status === 'confirmed';
+          const isNoShow = a.status === 'No Show' || a.status === 'no_show';
+          const isCancelled = a.status === 'cancelled';
+
+          return `
+            <div class="appointment-card ${isCancelled ? 'cancelled' : ''} ${isNoShow ? 'no_show' : ''}">
+              <div class="appt-time">
+                <div class="appt-time-value">${a.time || '—'}</div>
+                <div class="appt-time-label">uur</div>
+              </div>
+              <div class="appt-info">
+                <div class="appt-name">${a.first_name} ${a.last_name}</div>
+                <div class="appt-treatment">${a.treatment}</div>
+                <div class="appt-contact">${a.email} · ${a.phone}</div>
+              </div>
+              <div class="appt-actions">
+                <span class="status-badge ${statusClass(a.status)}">${statusLabel(a.status)}</span>
+                ${isConfirmed ? `<button class="noshow-btn" onclick="markNoShow('${a.appointment_id}', this)">No-show</button>` : ''}
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+  }).join('');
+}
+
+async function loadData() {
+  document.getElementById('loadingState').style.display = 'flex';
+  document.getElementById('agendaContent').style.display = 'none';
+
+  try {
+    const res = await fetch(AGENDA_URL);
+    const data = await res.json();
+    allAppointments = data.appointments || [];
+
+    const now = new Date();
+    document.getElementById('lastUpdated').textContent = `${now.getHours()}:${String(now.getMinutes()).padStart(2,'0')}`;
+
+    document.getElementById('loadingState').style.display = 'none';
+    document.getElementById('agendaContent').style.display = 'block';
+    render();
+  } catch(e) {
+    document.getElementById('loadingState').innerHTML = '<div class="loading-text">Kon geen verbinding maken. Probeer opnieuw.</div>';
+  }
+}
+
+loadData();
+setInterval(loadData, 2 * 60 * 1000);
+</script>
+
+</body>
+</html>
