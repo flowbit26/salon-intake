@@ -273,14 +273,15 @@ async function loadData() {
     const s = data.stats;
     const recent = data.recent || [];
 
-    // Bereken omzet uit recente data
+    // Bereken omzet uit ALLE records
     const nu = new Date();
     const dezeMaand = `${nu.getFullYear()}-${String(nu.getMonth()+1).padStart(2,'0')}`;
+    const all = data.all || [];
 
-    const totaleOmzet = recent.filter(r => r.status === 'confirmed').reduce((sum, r) => sum + getPrijs(r.treatment), 0);
-    const omzetMaand = recent.filter(r => r.status === 'confirmed' && r.date && r.date.startsWith(dezeMaand)).reduce((sum, r) => sum + getPrijs(r.treatment), 0);
-    const gemistOmzet = recent.filter(r => r.status === 'cancelled' || r.status === 'No Show' || r.status === 'no_show').reduce((sum, r) => sum + getPrijs(r.treatment), 0);
-    const herboekingen = recent.filter(r => r.status === 'confirmed').length;
+    const totaleOmzet = all.filter(r => r.status === 'confirmed' && r.treatment).reduce((sum, r) => sum + getPrijs(r.treatment), 0);
+    const omzetMaand = all.filter(r => r.status === 'confirmed' && r.treatment && r.date && r.date.startsWith(dezeMaand)).reduce((sum, r) => sum + getPrijs(r.treatment), 0);
+    const gemistOmzet = all.filter(r => (r.status === 'cancelled' || r.status === 'No Show' || r.status === 'no_show') && r.treatment).reduce((sum, r) => sum + getPrijs(r.treatment), 0);
+    const herboekingen = all.filter(r => r.status === 'confirmed' && r.treatment).length;
 
     // Afspraken stats
     document.getElementById('statTotal').textContent = s.total;
