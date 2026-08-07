@@ -1,4 +1,3 @@
-cat > /mnt/user-data/outputs/flowbit-demo-v8.html << 'HTMLEOF'
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -640,6 +639,9 @@ tbody td { padding: 10px 16px; font-size: 13px; color: var(--text); }
       <div class="flow-item">
         <div class="flow-item-name">Dashboard</div>
       </div>
+      <div class="flow-item">
+        <div class="flow-item-name">Review</div>
+      </div>
     </div>
   </div>
 </div>
@@ -739,7 +741,7 @@ tbody td { padding: 10px 16px; font-size: 13px; color: var(--text); }
   <div class="mails-wrap">
     <div class="section-tag">Automatische mails</div>
     <h2 class="section-h" style="margin-bottom:8px;">De juiste mail,<br><span>op het juiste moment.</span></h2>
-    <p class="section-p">Elke klant ontvangt de juiste mail automatisch — in uw huisstijl, zonder dat u iets hoeft te doen.</p>
+    <p class="section-p">Elke klant ontvangt de juiste mail automatisch. De templates zijn volledig aanpasbaar aan uw eigen huisstijl, kleuren en toon.</p>
 
     <div class="mail-tabs">
       <button class="mail-tab active" onclick="showMail('confirm',this)">Bevestiging</button>
@@ -747,6 +749,7 @@ tbody td { padding: 10px 16px; font-size: 13px; color: var(--text); }
       <button class="mail-tab" onclick="showMail('r24',this)">24u herinnering</button>
       <button class="mail-tab" onclick="showMail('r2',this)">2u herinnering</button>
       <button class="mail-tab" onclick="showMail('noshow',this)">No-show opvolging</button>
+      <button class="mail-tab" onclick="showMail('review',this)">Review uitnodiging</button>
     </div>
 
     <div class="mail-pv active" id="mpv-confirm">
@@ -832,6 +835,22 @@ tbody td { padding: 10px 16px; font-size: 13px; color: var(--text); }
           <div class="mail-sub">We hebben u vandaag gemist.</div>
           <div class="mail-p">U bent van harte welkom om op een ander moment langs te komen.</div>
           <div><span class="mail-cta-book">Nieuwe afspraak maken</span></div>
+        </div>
+        <div class="mail-footer"><div class="mail-footer-txt">Atelier Lumière · Mechelen</div></div>
+        <div class="mail-bot-line"></div>
+      </div></div>
+    </div>
+
+    <div class="mail-pv" id="mpv-review">
+      <div class="mail-shell"><div class="mail-card">
+        <div class="mail-top-line"></div>
+        <div class="mail-header"><div class="mail-brand">ATELIER LUMIÈRE</div><div class="mail-brand-sub">Huidtherapie &amp; Aesthetiek</div></div>
+        <div class="mail-body">
+          <div class="mail-greeting">Beste Emma,</div>
+          <div class="mail-sub">Hoe was uw ervaring?</div>
+          <div class="mail-p">Wij hopen dat u tevreden bent over uw behandeling. Uw mening is voor ons erg waardevol. Het duurt slechts 1 minuut.</div>
+          <div style="margin-bottom:14px;"><span class="mail-cta-book">Laat een review achter</span></div>
+          <div class="mail-p" style="font-size:9px;color:#6F7D6D;">Automatisch verstuurd na uw afspraak door Flowbit.</div>
         </div>
         <div class="mail-footer"><div class="mail-footer-txt">Atelier Lumière · Mechelen</div></div>
         <div class="mail-bot-line"></div>
