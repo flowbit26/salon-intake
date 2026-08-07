@@ -603,9 +603,9 @@ tbody td { padding: 10px 16px; font-size: 13px; color: var(--text); }
 <!-- S1: INTRO -->
 <div class="screen active" id="screen-0">
   <div class="intro-wrap">
-    <div class="intro-label">Flowbit — Salon Automation</div>
+    <div class="intro-label">Flowbit — Booking Automation</div>
     <h1 class="intro-h1">Elke lege stoel<br><span>kost u geld.</span></h1>
-    <p class="intro-p">Flowbit automatiseert uw boekingen, herinneringen en opvolging. Volledig in uw huisstijl. Zonder dat u iets hoeft te doen.</p>
+    <p class="intro-p">Flowbit automatiseert uw boekingen, herinneringen en opvolging voor elke praktijk of salon. Volledig in uw huisstijl. Zonder dat u iets hoeft te doen.</p>
 
     <div class="intro-metrics">
       <div>
@@ -652,7 +652,7 @@ tbody td { padding: 10px 16px; font-size: 13px; color: var(--text); }
     <div class="split-left">
       <div class="section-tag">Boekingspagina</div>
       <h2 class="section-h">Klanten boeken zelf,<br><span>24/7.</span></h2>
-      <p class="section-p">Een professionele boekingspagina volledig in uw huisstijl. Geen telefoontjes meer.</p>
+      <p class="section-p">Een professionele boekingspagina volledig in uw huisstijl. Klanten boeken zelf — geen telefoontjes meer.</p>
       <div class="check-list">
         <div class="check-item"><div class="check-dash"></div>Geen dubbele boekingen mogelijk</div>
         <div class="check-item"><div class="check-dash"></div>Bezette tijdsloten automatisch geblokkeerd</div>
@@ -663,18 +663,18 @@ tbody td { padding: 10px 16px; font-size: 13px; color: var(--text); }
     <div class="split-right">
       <div class="fw">
         <div class="fw-top">
-          <div class="fw-salon">Atelier Lumière</div>
+          <div class="fw-salon">Uw praktijk</div>
           <div class="fw-title">Maak een afspraak</div>
           <div class="fw-bar"><div class="fw-bar-fill" id="fwBar" style="width:25%"></div></div>
         </div>
         <div class="fw-body">
           <div class="fw-s active" id="fws-1">
             <div class="fw-q-label">Stap 1</div>
-            <div class="fw-q">Welke behandeling?</div>
+            <div class="fw-q">Waarvoor wenst u een afspraak?</div>
             <div class="fw-opts">
-              <div class="fw-opt" onclick="selTreat(this)"><span class="fw-opt-name">Botox behandeling</span><span class="fw-opt-price">€280</span></div>
-              <div class="fw-opt" onclick="selTreat(this)"><span class="fw-opt-name">Lip- of wangfillers</span><span class="fw-opt-price">€350</span></div>
-              <div class="fw-opt" onclick="selTreat(this)"><span class="fw-opt-name">Skinbooster</span><span class="fw-opt-price">€220</span></div>
+              <div class="fw-opt" onclick="selTreat(this)"><span class="fw-opt-name">Consultatie</span><span class="fw-opt-price">€80</span></div>
+              <div class="fw-opt" onclick="selTreat(this)"><span class="fw-opt-name">Behandeling</span><span class="fw-opt-price">€150</span></div>
+              <div class="fw-opt" onclick="selTreat(this)"><span class="fw-opt-name">Opvolgingsgesprek</span><span class="fw-opt-price">€60</span></div>
             </div>
             <div class="fw-actions"><button class="fw-btn fw-btn-p" onclick="fwNext()">Volgende</button></div>
           </div>
@@ -710,7 +710,7 @@ tbody td { padding: 10px 16px; font-size: 13px; color: var(--text); }
             <div class="fw-q-label">Stap 4</div>
             <div class="fw-q">Bevestig uw afspraak</div>
             <div class="fw-summary">
-              <div class="fw-sumrow"><span class="fw-sl">Behandeling</span><span class="fw-sv">Botox behandeling</span></div>
+              <div class="fw-sumrow"><span class="fw-sl">Afspraak</span><span class="fw-sv">Consultatie</span></div>
               <div class="fw-sumrow"><span class="fw-sl">Datum</span><span class="fw-sv">8 augustus 2026</span></div>
               <div class="fw-sumrow"><span class="fw-sl">Tijdstip</span><span class="fw-sv">14:00</span></div>
               <div class="fw-sumrow"><span class="fw-sl">Naam</span><span class="fw-sv">Emma Claes</span></div>
@@ -741,7 +741,7 @@ tbody td { padding: 10px 16px; font-size: 13px; color: var(--text); }
   <div class="mails-wrap">
     <div class="section-tag">Automatische mails</div>
     <h2 class="section-h" style="margin-bottom:8px;">De juiste mail,<br><span>op het juiste moment.</span></h2>
-    <p class="section-p">Elke klant ontvangt de juiste mail automatisch. De templates zijn volledig aanpasbaar aan uw eigen huisstijl, kleuren en toon.</p>
+    <p class="section-p">Elke klant ontvangt automatisch de juiste mail. De templates zijn volledig aanpasbaar aan uw huisstijl, kleuren en toon — voor elke niche.</p>
 
     <div class="mail-tabs">
       <button class="mail-tab active" onclick="showMail('confirm',this)">Bevestiging</button>
@@ -755,19 +755,19 @@ tbody td { padding: 10px 16px; font-size: 13px; color: var(--text); }
     <div class="mail-pv active" id="mpv-confirm">
       <div class="mail-shell"><div class="mail-card">
         <div class="mail-top-line"></div>
-        <div class="mail-header"><div class="mail-brand">ATELIER LUMIÈRE</div><div class="mail-brand-sub">Huidtherapie &amp; Aesthetiek</div></div>
+        <div class="mail-header"><div class="mail-brand">UW PRAKTIJK</div><div class="mail-brand-sub">Uw praktijk</div></div>
         <div class="mail-body">
           <div class="mail-greeting">Beste Emma,</div>
           <div class="mail-sub">Uw afspraak is bevestigd.</div>
-          <div class="mail-p">Wij kijken ernaar uit u te verwelkomen in ons atelier.</div>
+          <div class="mail-p">Wij kijken ernaar uit u te verwelkomen.</div>
           <div class="mail-box">
-            <div class="mail-row"><div class="mail-rl">Behandeling</div><div class="mail-rv">Botox behandeling</div></div>
+            <div class="mail-row"><div class="mail-rl">Behandeling</div><div class="mail-rv">Consultatie</div></div>
             <div class="mail-row"><div class="mail-rl">Datum</div><div class="mail-rv">8 augustus 2026</div></div>
             <div class="mail-row"><div class="mail-rl">Tijdstip</div><div class="mail-rv">14:00</div></div>
           </div>
           <div><span class="mail-cta-cancel">Afspraak annuleren</span></div>
         </div>
-        <div class="mail-footer"><div class="mail-footer-txt">Atelier Lumière · Mechelen</div></div>
+        <div class="mail-footer"><div class="mail-footer-txt">Uw praktijk</div></div>
         <div class="mail-bot-line"></div>
       </div></div>
     </div>
@@ -775,14 +775,14 @@ tbody td { padding: 10px 16px; font-size: 13px; color: var(--text); }
     <div class="mail-pv" id="mpv-cancel">
       <div class="mail-shell"><div class="mail-card">
         <div class="mail-top-line"></div>
-        <div class="mail-header"><div class="mail-brand">ATELIER LUMIÈRE</div><div class="mail-brand-sub">Huidtherapie &amp; Aesthetiek</div></div>
+        <div class="mail-header"><div class="mail-brand">UW PRAKTIJK</div><div class="mail-brand-sub">Uw praktijk</div></div>
         <div class="mail-body">
           <div class="mail-greeting">Beste Emma,</div>
           <div class="mail-sub">Uw afspraak is geannuleerd.</div>
           <div class="mail-p">We bevestigen dat uw afspraak op <strong style="color:#F2EDE4;">8 augustus 2026</strong> om <strong style="color:#F2EDE4;">14:00</strong> geannuleerd is. U bent altijd welkom om een nieuw moment in te plannen.</div>
           <div><span class="mail-cta-book">Nieuwe afspraak maken</span></div>
         </div>
-        <div class="mail-footer"><div class="mail-footer-txt">Atelier Lumière · Mechelen</div></div>
+        <div class="mail-footer"><div class="mail-footer-txt">Uw praktijk</div></div>
         <div class="mail-bot-line"></div>
       </div></div>
     </div>
@@ -790,19 +790,19 @@ tbody td { padding: 10px 16px; font-size: 13px; color: var(--text); }
     <div class="mail-pv" id="mpv-r24">
       <div class="mail-shell"><div class="mail-card">
         <div class="mail-top-line"></div>
-        <div class="mail-header"><div class="mail-brand">ATELIER LUMIÈRE</div><div class="mail-brand-sub">Huidtherapie &amp; Aesthetiek</div></div>
+        <div class="mail-header"><div class="mail-brand">UW PRAKTIJK</div><div class="mail-brand-sub">Uw praktijk</div></div>
         <div class="mail-body">
           <div class="mail-greeting">Beste Emma,</div>
           <div class="mail-sub">Uw afspraak is morgen.</div>
           <div class="mail-p">Een vriendelijke herinnering aan uw afspraak morgen.</div>
           <div class="mail-box">
-            <div class="mail-row"><div class="mail-rl">Behandeling</div><div class="mail-rv">Botox behandeling</div></div>
+            <div class="mail-row"><div class="mail-rl">Behandeling</div><div class="mail-rv">Consultatie</div></div>
             <div class="mail-row"><div class="mail-rl">Datum</div><div class="mail-rv">8 augustus 2026</div></div>
             <div class="mail-row"><div class="mail-rl">Tijdstip</div><div class="mail-rv">14:00</div></div>
           </div>
           <div><span class="mail-cta-cancel">Afspraak annuleren</span></div>
         </div>
-        <div class="mail-footer"><div class="mail-footer-txt">Atelier Lumière · Mechelen</div></div>
+        <div class="mail-footer"><div class="mail-footer-txt">Uw praktijk</div></div>
         <div class="mail-bot-line"></div>
       </div></div>
     </div>
@@ -810,18 +810,18 @@ tbody td { padding: 10px 16px; font-size: 13px; color: var(--text); }
     <div class="mail-pv" id="mpv-r2">
       <div class="mail-shell"><div class="mail-card">
         <div class="mail-top-line"></div>
-        <div class="mail-header"><div class="mail-brand">ATELIER LUMIÈRE</div><div class="mail-brand-sub">Huidtherapie &amp; Aesthetiek</div></div>
+        <div class="mail-header"><div class="mail-brand">UW PRAKTIJK</div><div class="mail-brand-sub">Uw praktijk</div></div>
         <div class="mail-body">
           <div class="mail-greeting">Beste Emma,</div>
           <div class="mail-sub">Nog 2 uur.</div>
           <div class="mail-p">Een laatste herinnering aan uw afspraak van vandaag.</div>
           <div class="mail-box">
-            <div class="mail-row"><div class="mail-rl">Behandeling</div><div class="mail-rv">Botox behandeling</div></div>
+            <div class="mail-row"><div class="mail-rl">Behandeling</div><div class="mail-rv">Consultatie</div></div>
             <div class="mail-row"><div class="mail-rl">Tijdstip</div><div class="mail-rv">14:00 vandaag</div></div>
           </div>
           <div><span class="mail-cta-cancel">Afspraak annuleren</span></div>
         </div>
-        <div class="mail-footer"><div class="mail-footer-txt">Atelier Lumière · Mechelen</div></div>
+        <div class="mail-footer"><div class="mail-footer-txt">Uw praktijk</div></div>
         <div class="mail-bot-line"></div>
       </div></div>
     </div>
@@ -829,14 +829,14 @@ tbody td { padding: 10px 16px; font-size: 13px; color: var(--text); }
     <div class="mail-pv" id="mpv-noshow">
       <div class="mail-shell"><div class="mail-card">
         <div class="mail-top-line"></div>
-        <div class="mail-header"><div class="mail-brand">ATELIER LUMIÈRE</div><div class="mail-brand-sub">Huidtherapie &amp; Aesthetiek</div></div>
+        <div class="mail-header"><div class="mail-brand">UW PRAKTIJK</div><div class="mail-brand-sub">Uw praktijk</div></div>
         <div class="mail-body">
           <div class="mail-greeting">Beste Emma,</div>
           <div class="mail-sub">We hebben u vandaag gemist.</div>
           <div class="mail-p">U bent van harte welkom om op een ander moment langs te komen.</div>
           <div><span class="mail-cta-book">Nieuwe afspraak maken</span></div>
         </div>
-        <div class="mail-footer"><div class="mail-footer-txt">Atelier Lumière · Mechelen</div></div>
+        <div class="mail-footer"><div class="mail-footer-txt">Uw praktijk</div></div>
         <div class="mail-bot-line"></div>
       </div></div>
     </div>
@@ -844,7 +844,7 @@ tbody td { padding: 10px 16px; font-size: 13px; color: var(--text); }
     <div class="mail-pv" id="mpv-review">
       <div class="mail-shell"><div class="mail-card">
         <div class="mail-top-line"></div>
-        <div class="mail-header"><div class="mail-brand">ATELIER LUMIÈRE</div><div class="mail-brand-sub">Huidtherapie &amp; Aesthetiek</div></div>
+        <div class="mail-header"><div class="mail-brand">UW PRAKTIJK</div><div class="mail-brand-sub">Uw praktijk</div></div>
         <div class="mail-body">
           <div class="mail-greeting">Beste Emma,</div>
           <div class="mail-sub">Hoe was uw ervaring?</div>
@@ -852,7 +852,7 @@ tbody td { padding: 10px 16px; font-size: 13px; color: var(--text); }
           <div style="margin-bottom:14px;"><span class="mail-cta-book">Laat een review achter</span></div>
           <div class="mail-p" style="font-size:9px;color:#6F7D6D;">Automatisch verstuurd na uw afspraak door Flowbit.</div>
         </div>
-        <div class="mail-footer"><div class="mail-footer-txt">Atelier Lumière · Mechelen</div></div>
+        <div class="mail-footer"><div class="mail-footer-txt">Uw praktijk</div></div>
         <div class="mail-bot-line"></div>
       </div></div>
     </div>
@@ -880,17 +880,17 @@ tbody td { padding: 10px 16px; font-size: 13px; color: var(--text); }
       </div>
       <div class="ag-card" onclick="openProfile('emma')">
         <div><div class="ag-time-v">09:00</div><div class="ag-time-l">uur</div></div>
-        <div><div class="ag-name">Emma Claes</div><div class="ag-treat">Botox behandeling</div></div>
+        <div><div class="ag-name">Emma Claes</div><div class="ag-treat">Consultatie</div></div>
         <div class="ag-right" onclick="event.stopPropagation()"><span class="ag-badge ag-g">Bevestigd</span><button class="ag-noshow-btn">No-show</button></div>
       </div>
       <div class="ag-card" onclick="openProfile('thomas')">
         <div><div class="ag-time-v">11:00</div><div class="ag-time-l">uur</div></div>
-        <div><div class="ag-name">Thomas Peeters</div><div class="ag-treat">Skinbooster</div></div>
+        <div><div class="ag-name">Thomas Peeters</div><div class="ag-treat">Opvolgingsgesprek</div></div>
         <div class="ag-right" onclick="event.stopPropagation()"><span class="ag-badge ag-g">Bevestigd</span><button class="ag-noshow-btn">No-show</button></div>
       </div>
       <div class="ag-card cancelled">
         <div><div class="ag-time-v">14:00</div><div class="ag-time-l">uur</div></div>
-        <div><div class="ag-name">Julie Wouters</div><div class="ag-treat">Lip- of wangfillers</div></div>
+        <div><div class="ag-name">Julie Wouters</div><div class="ag-treat">Behandeling</div></div>
         <div class="ag-right"><span class="ag-badge ag-r">Geannuleerd</span></div>
       </div>
     </div>
@@ -903,12 +903,12 @@ tbody td { padding: 10px 16px; font-size: 13px; color: var(--text); }
       </div>
       <div class="ag-card" onclick="openProfile('sarah')">
         <div><div class="ag-time-v">10:00</div><div class="ag-time-l">uur</div></div>
-        <div><div class="ag-name">Sarah Dubois</div><div class="ag-treat">Botox behandeling</div></div>
+        <div><div class="ag-name">Sarah Dubois</div><div class="ag-treat">Consultatie</div></div>
         <div class="ag-right" onclick="event.stopPropagation()"><span class="ag-badge ag-g">Bevestigd</span><button class="ag-noshow-btn">No-show</button></div>
       </div>
       <div class="ag-card">
         <div><div class="ag-time-v">16:00</div><div class="ag-time-l">uur</div></div>
-        <div><div class="ag-name">Kevin Janssen</div><div class="ag-treat">Skinbooster</div></div>
+        <div><div class="ag-name">Kevin Janssen</div><div class="ag-treat">Opvolgingsgesprek</div></div>
         <div class="ag-right"><span class="ag-badge ag-y">No-show</span></div>
       </div>
     </div>
@@ -960,10 +960,10 @@ tbody td { padding: 10px 16px; font-size: 13px; color: var(--text); }
       <div class="d-chart">
         <div class="d-chart-title">Behandelingen</div>
         <div class="d-bars">
-          <div class="d-bar-row"><div class="d-bar-label">Botox</div><div class="d-bar-track"><div class="d-bar-fill" style="width:85%;background:#EDEDED;opacity:0.3;"></div></div><div class="d-bar-count">68x</div></div>
-          <div class="d-bar-row"><div class="d-bar-label">Lip- &amp; wangfillers</div><div class="d-bar-track"><div class="d-bar-fill" style="width:45%;background:#EDEDED;opacity:0.2;"></div></div><div class="d-bar-count">36x</div></div>
-          <div class="d-bar-row"><div class="d-bar-label">Skinbooster</div><div class="d-bar-track"><div class="d-bar-fill" style="width:30%;background:#EDEDED;opacity:0.15;"></div></div><div class="d-bar-count">24x</div></div>
-          <div class="d-bar-row"><div class="d-bar-label">Adviesgesprek</div><div class="d-bar-track"><div class="d-bar-fill" style="width:17%;background:#EDEDED;opacity:0.1;"></div></div><div class="d-bar-count">14x</div></div>
+          <div class="d-bar-row"><div class="d-bar-label">Consultatie</div><div class="d-bar-track"><div class="d-bar-fill" style="width:85%;background:#EDEDED;opacity:0.3;"></div></div><div class="d-bar-count">68x</div></div>
+          <div class="d-bar-row"><div class="d-bar-label">Behandeling</div><div class="d-bar-track"><div class="d-bar-fill" style="width:45%;background:#EDEDED;opacity:0.2;"></div></div><div class="d-bar-count">36x</div></div>
+          <div class="d-bar-row"><div class="d-bar-label">Opvolgingsgesprek</div><div class="d-bar-track"><div class="d-bar-fill" style="width:30%;background:#EDEDED;opacity:0.15;"></div></div><div class="d-bar-count">24x</div></div>
+          <div class="d-bar-row"><div class="d-bar-label">Overig</div><div class="d-bar-track"><div class="d-bar-fill" style="width:17%;background:#EDEDED;opacity:0.1;"></div></div><div class="d-bar-count">14x</div></div>
         </div>
       </div>
     </div>
@@ -973,11 +973,11 @@ tbody td { padding: 10px 16px; font-size: 13px; color: var(--text); }
       <table>
         <thead><tr><th>Naam</th><th>Behandeling</th><th>Datum</th><th>Waarde</th><th>Status</th></tr></thead>
         <tbody>
-          <tr><td>Emma Claes</td><td class="td-m">Botox behandeling</td><td class="td-m">29 jul 2026</td><td class="td-m">€280</td><td><span class="t-badge t-g">Bevestigd</span></td></tr>
-          <tr><td>Thomas Peeters</td><td class="td-m">Skinbooster</td><td class="td-m">29 jul 2026</td><td class="td-m">€220</td><td><span class="t-badge t-g">Bevestigd</span></td></tr>
-          <tr><td>Julie Wouters</td><td class="td-m">Lip- of wangfillers</td><td class="td-m">29 jul 2026</td><td class="td-m">€350</td><td><span class="t-badge t-r">Geannuleerd</span></td></tr>
-          <tr><td>Sarah Dubois</td><td class="td-m">Botox behandeling</td><td class="td-m">30 jul 2026</td><td class="td-m">€280</td><td><span class="t-badge t-g">Bevestigd</span></td></tr>
-          <tr><td>Kevin Janssen</td><td class="td-m">Skinbooster</td><td class="td-m">30 jul 2026</td><td class="td-m">€220</td><td><span class="t-badge t-y">No-show</span></td></tr>
+          <tr><td>Emma Claes</td><td class="td-m">Consultatie</td><td class="td-m">29 jul 2026</td><td class="td-m">€280</td><td><span class="t-badge t-g">Bevestigd</span></td></tr>
+          <tr><td>Thomas Peeters</td><td class="td-m">Opvolgingsgesprek</td><td class="td-m">29 jul 2026</td><td class="td-m">€220</td><td><span class="t-badge t-g">Bevestigd</span></td></tr>
+          <tr><td>Julie Wouters</td><td class="td-m">Behandeling</td><td class="td-m">29 jul 2026</td><td class="td-m">€350</td><td><span class="t-badge t-r">Geannuleerd</span></td></tr>
+          <tr><td>Sarah Dubois</td><td class="td-m">Consultatie</td><td class="td-m">30 jul 2026</td><td class="td-m">€280</td><td><span class="t-badge t-g">Bevestigd</span></td></tr>
+          <tr><td>Kevin Janssen</td><td class="td-m">Opvolgingsgesprek</td><td class="td-m">30 jul 2026</td><td class="td-m">€220</td><td><span class="t-badge t-y">No-show</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -1141,12 +1141,12 @@ function showMail(id, btn) {
 
 // KLANTPROFIEL
 const profiles = {
-  emma: { naam:'Emma Claes', email:'emma@email.com', tel:'+32 476 12 34 56', initialen:'EC', bezoeken:8, omzet:2240, favoriet:'Botox behandeling',
-    hist:[{date:'29 jul 2026',time:'09:00',treat:'Botox behandeling',status:'confirmed',prijs:280},{date:'15 jun 2026',time:'11:00',treat:'Botox behandeling',status:'confirmed',prijs:280},{date:'3 mei 2026',time:'14:00',treat:'Lip- of wangfillers',status:'confirmed',prijs:350},{date:'12 apr 2026',time:'10:00',treat:'Botox behandeling',status:'cancelled',prijs:280}]},
+  emma: { naam:'Emma Claes', email:'emma@email.com', tel:'+32 476 12 34 56', initialen:'EC', bezoeken:8, omzet:2240, favoriet:'Consultatie',
+    hist:[{date:'29 jul 2026',time:'09:00',treat:'Consultatie',status:'confirmed',prijs:280},{date:'15 jun 2026',time:'11:00',treat:'Consultatie',status:'confirmed',prijs:280},{date:'3 mei 2026',time:'14:00',treat:'Behandeling',status:'confirmed',prijs:350},{date:'12 apr 2026',time:'10:00',treat:'Consultatie',status:'cancelled',prijs:280}]},
   thomas: { naam:'Thomas Peeters', email:'thomas@email.com', tel:'+32 498 45 67 89', initialen:'TP', bezoeken:3, omzet:660, favoriet:'Skinbooster',
-    hist:[{date:'29 jul 2026',time:'11:00',treat:'Skinbooster',status:'confirmed',prijs:220},{date:'10 jun 2026',time:'13:00',treat:'Skinbooster',status:'confirmed',prijs:220},{date:'22 apr 2026',time:'15:00',treat:'Skinbooster',status:'no_show',prijs:220}]},
-  sarah: { naam:'Sarah Dubois', email:'sarah@email.com', tel:'+32 485 23 45 67', initialen:'SD', bezoeken:5, omzet:1400, favoriet:'Botox behandeling',
-    hist:[{date:'30 jul 2026',time:'10:00',treat:'Botox behandeling',status:'confirmed',prijs:280},{date:'18 jun 2026',time:'10:00',treat:'Botox behandeling',status:'confirmed',prijs:280},{date:'5 mei 2026',time:'11:00',treat:'Lip- of wangfillers',status:'confirmed',prijs:350}]}
+    hist:[{date:'29 jul 2026',time:'11:00',treat:'Opvolging',status:'confirmed',prijs:220},{date:'10 jun 2026',time:'13:00',treat:'Opvolging',status:'confirmed',prijs:220},{date:'22 apr 2026',time:'15:00',treat:'Opvolging',status:'no_show',prijs:220}]},
+  sarah: { naam:'Sarah Dubois', email:'sarah@email.com', tel:'+32 485 23 45 67', initialen:'SD', bezoeken:5, omzet:1400, favoriet:'Consultatie',
+    hist:[{date:'30 jul 2026',time:'10:00',treat:'Consultatie',status:'confirmed',prijs:280},{date:'18 jun 2026',time:'10:00',treat:'Consultatie',status:'confirmed',prijs:280},{date:'5 mei 2026',time:'11:00',treat:'Behandeling',status:'confirmed',prijs:350}]}
 };
 
 function openProfile(id) {
